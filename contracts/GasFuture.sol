@@ -2,6 +2,7 @@ pragma solidity >=0.4.22 <0.6.0;
 
 contract GasFuture {
 
+    uint escrow_balance;
     address public buyer;
     address public seller;
     uint private start;
@@ -17,5 +18,11 @@ contract GasFuture {
         seller = seller_address;
         length_days = contract_length_days;
 	}
+
+    function deposit() public payable {
+        if (msg.sender == buyer) {
+            escrow_balance += msg.value;
+        }
+    }
 
 }
