@@ -32,6 +32,19 @@ contract GasFuture {
         }
     }
 
+    function cancel() public {
+        if (msg.sender == buyer){
+            buyerAccepts = false;
+        } else if (msg.sender == seller){
+            sellerAccepts = false;
+        }
+        // If both buyer and seller cancel, money is returned to buyer.
+        if (!buyerAccepts && !sellerAccepts) {
+            // For any potential fees implemented later, this must be checked.
+            selfdestruct(buyer);
+        }
+    }
+
     function deposit() public payable {
         if (msg.sender == buyer && buyerAccepts && sellerAccepts) {
             escrow_balance += msg.value;
