@@ -4,14 +4,18 @@ contract GasFuture {
 
     address public buyer;
     address public seller;
+    uint private start;
+    uint private length_days;
 
     mapping (address => uint) balances;
 
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-	constructor(address buyer_address, address seller_address) public {
+	constructor(address buyer_address, address seller_address, uint contract_length_days) public {
+        start = block.timestamp;
         buyer = buyer_address;
         seller = seller_address;
+        length_days = contract_length_days;
 	}
 
 }
