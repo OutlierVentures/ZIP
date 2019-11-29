@@ -51,4 +51,12 @@ contract GasFuture {
         }
     }
 
+    function settle() public payable {
+        if (block.timestamp > start + length_days * 1 days) {
+            seller.transfer(price);
+            escrow_balance -= price;
+        }
+
+    }
+
 }
