@@ -46,7 +46,7 @@ contract GasFuture {
     }
 
     function deposit() public payable {
-        if (msg.sender == buyer && buyerAccepts && sellerAccepts) {
+        if (msg.sender == buyer && buyerAccepts && sellerAccepts && msg.value >= price) {
             escrow_balance += msg.value;
         }
     }
