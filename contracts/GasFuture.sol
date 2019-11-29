@@ -23,6 +23,7 @@ contract GasFuture {
         length_days = contract_length_days;
 	}
 
+    // The buyer and seller accept the terms by calling this function
     function accept() public {
         if (msg.sender == buyer){
             buyerAccepts = true;
@@ -32,7 +33,7 @@ contract GasFuture {
     }
 
     function deposit() public payable {
-        if (msg.sender == buyer) {
+        if (msg.sender == buyer && buyerAccepts && sellerAccepts) {
             escrow_balance += msg.value;
         }
     }
