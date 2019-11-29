@@ -5,7 +5,7 @@ contract GasFuture {
     address payable public buyer;
     address payable public seller;
     uint private price;
-    uint private start;
+    uint private start_date;
     uint private length_days;
     uint escrow_balance;
     bool buyerAccepts;
@@ -16,7 +16,7 @@ contract GasFuture {
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
 	constructor(address payable buyer_address, address payable seller_address, uint agreed_price, uint contract_length_days) public {
-        start = block.timestamp;
+        start_date = block.timestamp;
         buyer = buyer_address;
         seller = seller_address;
         price = agreed_price;
@@ -46,13 +46,13 @@ contract GasFuture {
     }
 
     function deposit() public payable {
-        if (msg.sender == buyer && buyerAccepts && sellerAccepts && msg.value >= price) {
+        if (msg.sender == buyer && buyerAccepts && sellerAccepts) {
             escrow_balance += msg.value;
         }
     }
 
     function settle() public payable {
-        if (block.timestamp > start + length_days * 1 days) {
+        if (block.timestamp > start_date + length_days * 1 days) {
             seller.transfer(price);
             escrow_balance -= price;
         }
