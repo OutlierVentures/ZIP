@@ -11,7 +11,7 @@ contract TestRightToGas {
 
     uint expected = 10000;
 
-    Assert.equal(meta.getBalance(tx.origin), expected, "Owner should have 10000 RightToGas initially");
+    Assert.equal(meta.getBalance(msg.sender), expected, "Owner should have 10000 RightToGas initially");
   }
 
   function testInitialBalanceWithNewRightToGas() public {
@@ -19,7 +19,8 @@ contract TestRightToGas {
 
     uint expected = 10000;
 
-    Assert.equal(meta.getBalance(tx.origin), expected, "Owner should have 10000 RightToGas initially");
+    Assert.equal(meta.getBalance(msg.sender), expected, "Owner should have 10000 RightToGas initially");
   }
 
 }
+
