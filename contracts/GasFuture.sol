@@ -27,15 +27,15 @@ contract GasFuture {
     function accept() public {
         if (msg.sender == buyer){
             buyerAccepts = true;
-        } else if (msg.sender == seller){
+        } else if (msg.sender == seller) {
             sellerAccepts = true;
         }
     }
 
     function cancel() public {
-        if (msg.sender == buyer){
+        if (msg.sender == buyer) {
             buyerAccepts = false;
-        } else if (msg.sender == seller){
+        } else if (msg.sender == seller) {
             sellerAccepts = false;
         }
         // If both buyer and seller cancel, money is returned to buyer.
@@ -48,6 +48,15 @@ contract GasFuture {
     function deposit() public payable {
         if (msg.sender == buyer && buyerAccepts && sellerAccepts) {
             escrow_balance += msg.value;
+        }
+    }
+
+    // Start the contract within a day of initializing, assuming the full price is paid down, otherwise return funds.
+    function start() public payable {
+        if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
+            seller.transfer(price);
+        } else {
+            selfdestruct(buyer);
         }
     }
 
