@@ -65,7 +65,9 @@ contract GasFuture {
             seller.transfer(price);
             escrow_balance -= price;
         }
-
     }
+
+    // TODO Function to redeem RightToGas for a portion of the future, where the seller buys the equivalent.
+    // Seller must be required to purhcase a 'normal' speed transaction quantity of gas.
 
 }
