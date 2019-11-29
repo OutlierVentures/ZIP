@@ -2,12 +2,14 @@ pragma solidity >=0.4.22 <0.6.0;
 
 contract GasFuture {
 
-    uint escrow_balance;
     address public buyer;
     address public seller;
     uint private price;
     uint private start;
     uint private length_days;
+    uint escrow_balance;
+    bool buyerAccepts;
+    bool sellerAccepts;
 
     mapping (address => uint) balances;
 
@@ -20,6 +22,14 @@ contract GasFuture {
         price = agreed_price;
         length_days = contract_length_days;
 	}
+
+    function accept() public {
+        if (msg.sender == buyer){
+            buyerAccepts = true;
+        } else if (msg.sender == seller){
+            sellerAccepts = true;
+        }
+    }
 
     function deposit() public payable {
         if (msg.sender == buyer) {
