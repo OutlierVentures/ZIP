@@ -42,3 +42,13 @@ There are two options for stabilising gas using a futures market:
 
 The former is tried and tested, but relies on the ability to exploit refund mechanisms, which may be impossible on certain chains. The latter is inherently cross-chain compatible (by purchasing the relevant native chain token using the right to gas token, then using the native chain token to pay for gas). Notably, the second option also introduces significant transaction delay (on average doubling transaction time, assuming no exchange delay) as well as requires an actively traded token pair to function.
 
+## Solidity vs Etch implementations
+
+Key points:
+
+- A meta-token for the entire CStack is better issued on Ethereum for three reasons:
+    1. Interoperability with virtually all wallets, improving UX significantly.
+    2. Interoperability with exchanges by default, making listings easier.
+    3. Ethereum and the ERC20 standard are battle-tested, allowing for more confidence in the token's safety.
+- Solidity and Etch are both equally capable of running a smart-contract based futures exchange, however interoperability for the redemption for gas component makes this better suited to Ethereum, as it natively covers 10+ tokens in the CStack rather than one.
+- In the CStack, Fetch.AI is currently the most viable non-Ethereum chain to implement gas stability and redemption for.
