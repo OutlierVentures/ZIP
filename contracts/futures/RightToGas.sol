@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "./ConvertLib.sol";
+import "../utils/ConvertLib.sol";
 
 // Implement standard compliance of tokens: https://github.com/ConsenSys/Tokens
 
@@ -22,7 +22,7 @@ contract RightToGas {
 	}
 
 	function getBalanceInEth(address addr) public view returns(uint){
-		return ConvertLib.convert(getBalance(addr),2);
+		return ConvertLib.convert(getBalance(addr), 2);
 	}
 
 	function getBalance(address addr) public view returns(uint) {
