@@ -3,6 +3,7 @@ pragma solidity ^0.5.0;
 import "./Interface.sol";
 import "../utils/SafeMath.sol";
 import "../utils/Context.sol";
+import "../utils/ConvertLib.sol";
 
 /**
  * @dev Implementation of the token interface. This is the OpenZeppelin ERC20
@@ -27,7 +28,7 @@ import "../utils/Context.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract ERC20 is Context, Interface {
+contract Supertoken is Context, Interface {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
@@ -226,4 +227,5 @@ contract ERC20 is Context, Interface {
         _burn(account, amount);
         _approve(account, _msgSender(), _allowances[account][_msgSender()].sub(amount, "ERC20: burn amount exceeds allowance"));
     }
+
 }
