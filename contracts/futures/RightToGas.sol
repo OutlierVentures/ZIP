@@ -22,7 +22,7 @@ contract RightToGas {
 	}
 
 	function getBalanceInEth(address addr) public view returns(uint){
-		return ConvertLib.convert(getBalance(addr), 2);
+		return ConvertLib.convert(getBalance(addr), address(0), address(this));
 	}
 
 	function getBalance(address addr) public view returns(uint) {
