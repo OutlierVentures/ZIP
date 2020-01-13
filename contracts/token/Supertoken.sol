@@ -228,4 +228,22 @@ contract Supertoken is Context, Interface {
         _approve(account, _msgSender(), _allowances[account][_msgSender()].sub(amount, "ERC20: burn amount exceeds allowance"));
     }
 
+    /**
+     * @dev Deposits an ERC20 and mints Supertokens at the conversion rate.
+     * The tokens are minted at the sender's address.
+     */
+    function deposit(address contractAddress, uint256 amount) public returns (bool) {
+
+        (bool success, ) = contractAddress.call(abi.encodeWithSignature(
+            "transferFrom(address, address, uint256)", _msgSender(), address(this), amount
+        ));
+        if (success) {
+            // Oracle data for conversion in ConvertLib
+            _mint(_msgSender(), ConvertLib.convert(amount, contractAddress, address(this)));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
