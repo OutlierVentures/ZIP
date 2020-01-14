@@ -4,6 +4,10 @@ import "../../node_modules/chainlink/contracts/ChainlinkClient.sol";
 
 contract ConvertLib is ChainlinkClient {
 
+	// Stores the answer from the Chainlink oracle
+	uint256 public currentPrice;
+	address public owner;
+
 	constructor(address _link) public {
 		// Set the address for the LINK token for the network.
 		if(_link == address(0)) {
@@ -30,8 +34,8 @@ contract ConvertLib is ChainlinkClient {
 		req.add("get", "https://min-api.cryptocompare.com/data/price?fsym=" + symbol + "&tsyms=ETH");
 		// Uses input param (dot-delimited string) as the "path" in the request parameters
 		req.add("path", "ETH");
-		// Adds an integer with the key "times" to the request parameters
-		req.addInt("times", 1000000000000000000);
+		// ARequest integer value in Gwei - ASSUMES PRICE CONSIDERED IS NEVER BELOW 1 GWEI (not worth it for fees)
+		req.addInt("times", 1000000000);
 		// Sends the request with the amount of payment specified to the oracle
 		sendChainlinkRequestTo(_oracle, req, _payment);
 	}
