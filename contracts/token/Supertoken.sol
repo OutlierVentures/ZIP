@@ -7,7 +7,7 @@ import "../utils/ConvertLib.sol";
 
 /**
  * @dev Implementation of the token interface. This is the OpenZeppelin ERC20
- * with added functionality for depositing CStack tokens.
+ * with added functionality for depositing ERC20 tokens in exchange for Supertokens.
  *
  * This implementation is agnostic to the way tokens are created. This means
  * that a supply mechanism has to be added in a derived contract using {_mint}.
@@ -219,7 +219,7 @@ contract Supertoken is Context, Interface {
     }
 
     /**
-     * @dev Destroys `amount` tokens from `account`.`amount` is then deducted
+     * @dev Destroys `amount` tokens from `account`. `amount` is then deducted
      * from the caller's allowance. For creating external-facing burn functions
      * where approved addresses can burn their approvee's tokens.
      *
