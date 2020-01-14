@@ -25,10 +25,11 @@ contract ConvertLib is ChainlinkClient {
 	}
 
 	function convert(uint256 amount, string inputSymbol, string outputSymbol) public pure returns (uint256 convertedAmount) {
-		// TODO Oracle data feeds for price - MULTIPLY BY 100 FOR INT, HANDLE address(0) MEANS ETH
-		// Need fee + buffer
-		uint256 priceInputETH = 10;
-		uint256 priceOutputETH = 5;
+		// TODO Wait for data to be available from request (wait for Event fire?)
+		requestPriceInETH(inputSymbol);
+		uint256 priceInputETH = currentPrice;
+		requestPriceInETH(outputSymbol);
+		uint256 priceOutputETH = currentPrice;
 		return (priceInputETH / priceOutputETH) * amount;
 	}
 
