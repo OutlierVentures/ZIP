@@ -36,6 +36,7 @@ contract Supertoken is Context, Interface {
     mapping (address => mapping (address => uint256)) private _allowances;
 
     uint256 private _totalSupply;
+    uint256 private _minEthBalance;
 
     /**
      * @dev See {Interface-totalSupply}.
@@ -248,9 +249,14 @@ contract Supertoken is Context, Interface {
      * The supertokens are burned at the sender's address.
      */
     function redeem(address contractAddress, uint256 amount) public returns (bool) {
-        _burn(_msgSender(), amount);
-        bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amount);
-        return success;
+        uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
+        if (contractBalance >= amount && address(this).balance > _minEthBalance) {
+            _burn(_msgSender(), amount);
+            bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amount);
+            return success;
+        } else {
+            return false;
+        }
     }
 
 }
