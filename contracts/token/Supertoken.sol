@@ -252,7 +252,10 @@ contract Supertoken is Context, Interface {
      */
     function redeem(address contractAddress, uint256 amount) public returns (bool) {
         _burn(_msgSender(), amount);
-        // Transfer token at contract address
+        (bool success, ) = contractAddress.call(abi.encodeWithSignature(
+            "transferFrom(address, address, uint256)", address(this), _msgSender(), amount
+        ));
+        return success;
     }
 
 }
