@@ -1,12 +1,14 @@
-# Stable Token
+# CStack Token
 
-Gas futures market for stable gas.
+A single token to use across the stack and a gas futures market for stable gas.
 
 ## Install
 
 ```sh
-npm i -g truffle
+npm i
 ```
+
+If you don't have truffle installed globally, install it: `npm i -g truffle`
 
 ## Deploy contracts
 
@@ -51,4 +53,5 @@ Key points:
     2. Interoperability with exchanges by default, making listings easier.
     3. Ethereum and the ERC20 standard are battle-tested, allowing for more confidence in the token's safety.
 - Solidity and Etch are both equally capable of running a smart-contract based futures exchange, however interoperability for the redemption for gas component makes this better suited to Ethereum, as it natively covers 10+ tokens in the CStack rather than one.
+- Price oracle data is more trusted on Ethereum through oracles such as Chain
 - In the CStack, Fetch.AI is currently the most viable non-Ethereum chain to implement gas stability and redemption for.
