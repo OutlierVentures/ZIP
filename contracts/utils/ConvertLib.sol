@@ -33,7 +33,7 @@ contract ConvertLib is ChainlinkClient {
 	}
 
 	// Creates a Chainlink request with the uint256 multiplier job
-	function requestPriceInETH(string symbol, uint256 _payment) public onlyOwner {
+	function requestPriceInETH(string symbol) public onlyOwner {
 		bytes32 jobId = keccak256(block.number, msg.data, nonce++);
 		// newRequest takes a JobID, a callback address, and callback function as input
 		Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
@@ -41,10 +41,10 @@ contract ConvertLib is ChainlinkClient {
 		req.add("get", "https://min-api.cryptocompare.com/data/price?fsym=" + symbol + "&tsyms=ETH");
 		// Uses input param (dot-delimited string) as the "path" in the request parameters
 		req.add("path", "ETH");
-		// ARequest integer value in Gwei - ASSUMES PRICE CONSIDERED IS NEVER BELOW 1 GWEI (not worth it for fees)
+		// Request integer value in Gwei - ASSUMES PRICE NEVER BELOW 1 GWEI (not worth it for user given fees)
 		req.addInt("times", 1000000000);
 		// Sends the request with the amount of payment specified to the oracle
-		sendChainlinkRequest(req, _payment);
+		sendChainlinkRequest(req, payment);
 	}
 
 	// Use recordChainlinkFulfillment to ensure only the requesting oracle can fulfill. Outputs uint256.
