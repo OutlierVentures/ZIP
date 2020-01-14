@@ -220,7 +220,8 @@ contract Supertoken is Context, Interface {
 
     /**
      * @dev Destroys `amount` tokens from `account`.`amount` is then deducted
-     * from the caller's allowance.
+     * from the caller's allowance. For creating external-facing burn functions
+     * where approved addresses can burn their approvee's tokens.
      *
      * See {_burn} and {_approve}.
      */
