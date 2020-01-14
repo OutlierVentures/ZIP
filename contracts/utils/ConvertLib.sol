@@ -8,7 +8,7 @@ contract ConvertLib is ChainlinkClient {
 	uint256 public currentPrice;
 	address public owner;
 
-	constructor(address _link) public {
+	constructor(address _link, address _oracle) public {
 		// Set the address for the LINK token for the network.
 		if(_link == address(0)) {
 			// Useful for deploying to public networks.
@@ -17,6 +17,7 @@ contract ConvertLib is ChainlinkClient {
 			// Useful if you're deploying to a local network.
 			setChainlinkToken(_link);
 		}
+		setChainlinkOracle(_oracle);
 	}
 
 	function convert(uint256 amount, address inputContract, address outputContract) public pure returns (uint256 convertedAmount) {
