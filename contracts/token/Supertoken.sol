@@ -255,7 +255,8 @@ contract Supertoken is Context, Interface, TokenDetails {
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         if (contractBalance >= amount && address(this).balance > _minEthBalance) {
             _burn(_msgSender(), amount);
-            bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amount);
+            uint amountRedeemed = ConvertLib.convert(amount, contractSymbol, symbol());
+            bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amountRedeemed);
             return success;
         } else {
             return false;
