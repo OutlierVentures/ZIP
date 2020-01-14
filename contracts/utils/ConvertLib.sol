@@ -1,5 +1,7 @@
 pragma solidity ^0.5.0;
 
+import "../../node_modules/chainlink/contracts/ChainlinkClient.sol";
+
 library ConvertLib{
 	function convert(uint256 amount, address inputContract, address outputContract) public pure returns (uint256 convertedAmount)
 	{
