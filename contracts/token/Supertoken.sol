@@ -246,4 +246,13 @@ contract Supertoken is Context, Interface {
         }
     }
 
+    /**
+     * @dev Redeems Supertokens for the token to pay for jobs.
+     * The supertokens are burned at the sender's address.
+     */
+    function redeem(address contractAddress, uint256 amount) public returns (bool) {
+        _burn(_msgSender(), amount);
+        // Transfer token at contract address
+    }
+
 }
