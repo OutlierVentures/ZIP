@@ -31,7 +31,7 @@ contract ConvertLib is ChainlinkClient {
 		// Uses input param (dot-delimited string) as the "path" in the request parameters
 		req.add("path", "ETH");
 		// Adds an integer with the key "times" to the request parameters
-		req.addInt("times", 100);
+		req.addInt("times", 1000000000000000000);
 		// Sends the request with the amount of payment specified to the oracle
 		sendChainlinkRequestTo(_oracle, req, _payment);
 	}
