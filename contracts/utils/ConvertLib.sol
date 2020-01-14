@@ -15,8 +15,7 @@ contract ConvertLib is ChainlinkClient {
 		}
 	}
 
-	function convert(uint256 amount, address inputContract, address outputContract) public pure returns (uint256 convertedAmount)
-	{
+	function convert(uint256 amount, address inputContract, address outputContract) public pure returns (uint256 convertedAmount) {
 		// TODO Oracle data feeds for price - MULTIPLY BY 100 FOR INT, HANDLE address(0) MEANS ETH
 		uint256 priceInputETH = 10;
 		uint256 priceOutputETH = 5;
@@ -24,11 +23,11 @@ contract ConvertLib is ChainlinkClient {
 	}
 
 	// Creates a Chainlink request with the uint256 multiplier job
-	function requestEthereumPrice(address _oracle, bytes32 _jobId, uint256 _payment) public onlyOwner {
+	function requestPrice(string symbol, address _oracle, bytes32 _jobId, uint256 _payment) public onlyOwner {
 		// newRequest takes a JobID, a callback address, and callback function as input
 		Chainlink.Request memory req = buildChainlinkRequest(_jobId, this, this.fulfill.selector);
 		// Adds a URL with the key "get" to the request parameters
-		req.add("get", "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD");
+		req.add("get", "https://min-api.cryptocompare.com/data/price?fsym=" + symbol + "&tsyms=USD");
 		// Uses input param (dot-delimited string) as the "path" in the request parameters
 		req.add("path", "USD");
 		// Adds an integer with the key "times" to the request parameters
