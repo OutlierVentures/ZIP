@@ -28,7 +28,7 @@ import "../utils/ConvertLib.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract Supertoken is Context, Interface {
+contract Supertoken is Context, Interface, TokenDetails {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
@@ -235,10 +235,12 @@ contract Supertoken is Context, Interface {
      * The tokens are minted at the sender's address.
      */
     function deposit(address contractAddress, uint256 amount) public returns (bool) {
+        // Any compatible tokens must implement the optional symbol() method.
+        string contractSymbol = TokenDetails(contractAddress).symbol();
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
             // Oracle data for conversion in ConvertLib
-            _mint(_msgSender(), ConvertLib.convert(amount, contractAddress, address(this)));
+            _mint(_msgSender(), ConvertLib.convert(amount, contractSymbol, symbol()));
             return true;
         } else {
             return false;
