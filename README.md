@@ -29,11 +29,19 @@ Barriers to adoption and UX issues, in order of importance:
 
 ## Intended solution
 
-1. A meta-token redeemed for the relevant underlying token through smart contracts and the time of executing ledger operations.
+1. A super-token redeemed for the relevant underlying token through smart contracts and the time of executing ledger operations.
 2. A smart contract-based gas futures market to stabilise the cost of fees.
 3. A fiat gateway/abstraction layer hiding the token cost, which ultimately should not be stabilised for the sake of investability.
 
 Note that token and gas price are not inherently correlated, only network congestion (which raises gas costs) tends to occur at the same time as token price increases due to increased trading volume. Stabilising gas costs will not stabilise token costs and vice versa.
+
+## Supertoken functionality
+
+The Supertoken is an ERC20-compliant token based largely on the OpenZeppelin reference for Solidity 0.5. It is a mint/burn model backed by a basket of tokens.
+
+The Supertoken is a basket of tokens which may be used to pay for network fees, as well as ETH to cover gas. At any time, anyone may redeem Supertokens for their chosen underlying token specified by that token's contract address. The deposited Supertokens are converted to the underlying tokens according to their market value in ETH. This price feed is achieved using Chainlink oracles. Similarly, underlying tokens may be deposited in the contract, minting Supertokens at the market rate for the depositor. Minimum token balances are required for mint/burn calls, and setting these minimum balances is only available to the contract owner (the value may be voted on using off-chain governance).
+
+The Supertoken thereby becomes an ERC20 token which may be used across any of the underlying networks by simply specifying the network at transaction time.
 
 ## Gas stabilisation mechanism options
 
