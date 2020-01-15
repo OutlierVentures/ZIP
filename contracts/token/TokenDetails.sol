@@ -3,12 +3,14 @@ pragma solidity ^0.5.0;
 import "./Interface.sol";
 
 /**
- * @dev Optional functions from the ERC20 standard.
+ * @dev Optional functions from the ERC20 standard, plus contract owner
+ * and min eth balance setter for gas.
  */
 contract TokenDetails is Interface {
     string private _name;
     string private _symbol;
     uint8 private _decimals;
+    address private _owner;
 
     /**
      * @dev Sets the values for `name`, `symbol`, and `decimals`. All three of
@@ -19,6 +21,7 @@ contract TokenDetails is Interface {
         _name = name;
         _symbol = symbol;
         _decimals = decimals;
+        _owner = msg.sender;
     }
 
     /**
@@ -51,4 +54,5 @@ contract TokenDetails is Interface {
     function decimals() public view returns (uint8) {
         return _decimals;
     }
+
 }
