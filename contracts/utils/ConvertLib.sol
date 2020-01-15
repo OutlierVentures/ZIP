@@ -37,8 +37,8 @@ contract ConvertLib is ChainlinkClient {
 	// Creates a Chainlink request with the uint256 multiplier job
 	function requestPriceInETH(string symbol) public onlyOwner {
 		// Check LINK balance is sufficient
-		require(Interface(address("0x514910771af9ca656af840dff83e8264ecf986ca")).balanceOf(address(this)) > minLinkBalance,
-				"LINK balance of conversion contract too low.");
+		require(Interface(address("0x514910771af9ca656af840dff83e8264ecf986ca")).balanceOf(address(this)) >= minLinkBalance,
+				"LINK balance of conversion contract is insufficient");
 		bytes32 jobId = keccak256(block.number, msg.data, nonce++);
 		// newRequest takes a JobID, a callback address, and callback function as input
 		Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);

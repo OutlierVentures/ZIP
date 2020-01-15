@@ -257,8 +257,8 @@ contract Supertoken is Context, Interface, TokenDetails {
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
-        _burn(_msgSender(), amount);
         uint amountRedeemed = ConvertLib.convert(amount, contractSymbol, symbol());
+        _burn(_msgSender(), amount);
         bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amountRedeemed);
         return success;
     }
