@@ -5,9 +5,9 @@ import "../../node_modules/chainlink/contracts/ChainlinkClient.sol";
 contract ConvertLib is ChainlinkClient {
 
 	address public owner;
+	uint256 public minLinkBalance;
 	uint256 public currentPrice; // Stores the answer from the Chainlink oracle
 	uint256 private payment; // Current payment for price request jobs
-	uint256 private minLinkBalance;
 
 	constructor(address _link, address _oracle) public {
 		// Set the address for the LINK token for the network.
