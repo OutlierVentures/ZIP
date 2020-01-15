@@ -36,7 +36,7 @@ contract Supertoken is Context, Interface, TokenDetails {
     mapping (address => mapping (address => uint256)) private _allowances;
 
     uint256 private _totalSupply;
-    uint256 private _minEthBalance = 1;
+    uint256 private _minEthBalance;
 
     /**
      * @dev See {Interface-totalSupply}.
