@@ -255,14 +255,12 @@ contract Supertoken is Context, Interface, TokenDetails {
      */
     function redeem(address contractAddress, uint256 amount) public returns (bool) {
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
-        if (contractBalance >= amount && address(this).balance > _minEthBalance) {
-            _burn(_msgSender(), amount);
-            uint amountRedeemed = ConvertLib.convert(amount, contractSymbol, symbol());
-            bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amountRedeemed);
-            return success;
-        } else {
-            return false;
-        }
+        require(contractBalance >= amount, "Insufficient balance");
+        require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
+        _burn(_msgSender(), amount);
+        uint amountRedeemed = ConvertLib.convert(amount, contractSymbol, symbol());
+        bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amountRedeemed);
+        return success;
     }
 
 }
