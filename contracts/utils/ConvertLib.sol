@@ -60,6 +60,13 @@ contract ConvertLib is ChainlinkClient {
 		require(link.transfer(msg.sender, link.balanceOf(address(this))), "Unable to transfer");
 	}
 
+	/**
+     * @dev Set the minimumLinkBalance of the contract to cover jobs.
+     */
+    function setMinLinkBalance(uint256 amount) public onlyOwner {
+        minLinkBalance = amount;
+    }
+
 	modifier onlyOwner() {
 		require(msg.sender == owner, "Message sender must be contract owner");
 		_;
