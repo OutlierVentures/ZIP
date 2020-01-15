@@ -7,10 +7,10 @@ import "./Interface.sol";
  * and min eth balance setter for gas.
  */
 contract TokenDetails is Interface {
+    address public owner;
     string private _name;
     string private _symbol;
     uint8 private _decimals;
-    address private _owner;
     uint256 private _minEthBalance;
 
     /**
@@ -22,7 +22,7 @@ contract TokenDetails is Interface {
         _name = name;
         _symbol = symbol;
         _decimals = decimals;
-        _owner = msg.sender;
+        owner = msg.sender; // Set to contract deployer
     }
 
     /**
@@ -56,4 +56,9 @@ contract TokenDetails is Interface {
         return _decimals;
     }
 
+    // Modifier for functions only accessible by the contract owner.
+    modifier onlyOwner() {
+		require(msg.sender == owner, "Message sender must be contract owner");
+		_;
+	}
 }
