@@ -56,6 +56,13 @@ contract TokenDetails is Interface {
         return _decimals;
     }
 
+    /**
+     * @dev Set the minimumEthBalance of the contract to cover gas.
+     */
+    function setMinEthBalance(uint256 amount) public onlyOwner {
+        _minEthBalance = amount;
+    }
+
     // Modifier for functions only accessible by the contract owner.
     modifier onlyOwner() {
 		require(msg.sender == owner, "Message sender must be contract owner");
