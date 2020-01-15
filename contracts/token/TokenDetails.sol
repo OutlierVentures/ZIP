@@ -11,6 +11,7 @@ contract TokenDetails is Interface {
     string private _symbol;
     uint8 private _decimals;
     address private _owner;
+    uint256 private _minEthBalance;
 
     /**
      * @dev Sets the values for `name`, `symbol`, and `decimals`. All three of
