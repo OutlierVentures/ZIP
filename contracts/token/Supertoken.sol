@@ -240,7 +240,8 @@ contract Supertoken is Context, Interface, TokenDetails {
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
             uint256 marketRate = ConvertLib.convert(amount, contractSymbol, symbol());
-            _mint(_msgSender(), marketRate);
+            uint256 fee = marketRate / 100;
+            _mint(_msgSender(), marketRate - fee);
             return true;
         } else {
             return false;
