@@ -233,7 +233,7 @@ contract Supertoken is Context, Interface, TokenDetails {
      * @dev Deposits an ERC20 and mints Supertokens at the conversion rate.
      * Deposited tokens must implement the ERC20-optional symbol() method.
      * The tokens are minted at the sender's address. Oracle data is
-     * handled in the ConvertLib contract.
+     * handled in the ConvertLib contract. Note that the caller covers gas.
      */
     function deposit(address contractAddress, uint256 amount) public returns (bool) {
         string contractSymbol = TokenDetails(contractAddress).symbol();
@@ -253,7 +253,7 @@ contract Supertoken is Context, Interface, TokenDetails {
      * Can also be used to exchange Supertokens for a base token of choice.
      * The redeemed token must implement the ERC20-optional symbol() method.
      * The supertokens are burned at the sender's address. Oracle data is
-     * handled in the ConvertLib contract.
+     * handled in the ConvertLib contract. Note that the caller covers gas.
      */
     function redeem(address contractAddress, uint256 amount) public returns (bool) {
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
