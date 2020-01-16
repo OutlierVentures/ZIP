@@ -242,7 +242,7 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
         if (success) {
             uint256 marketRate = ConvertLib.convert(amount, contractSymbol, symbol());
             uint256 fee = marketRate / 40;
-            _mint(_msgSender(), marketRate - fee);
+            increaseExternalAllowance(contractAddress, _msgSender(), marketRate - fee);
             return true;
         } else {
             return false;
