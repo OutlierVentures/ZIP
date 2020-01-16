@@ -242,7 +242,7 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
         if (success) {
             uint256 marketRate = ConvertLib.convert(amount, contractSymbol, symbol());
             uint256 fee = marketRate / 40;
-            increaseExternalAllowance(contractAddress, _msgSender(), marketRate - fee);
+            _mint(_msgSender(), marketRate - fee);
             return true;
         } else {
             return false;
@@ -262,8 +262,8 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
         uint amountRedeemed = ConvertLib.convert(amount, contractSymbol, symbol());
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
-        bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amountRedeemed - fee);
-        return success;
+        increaseExternalAllowance(contractAddress, _msgSender(), amounRedeemed - fee);
+        return true;
     }
 
 }
