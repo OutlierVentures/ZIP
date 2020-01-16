@@ -239,7 +239,8 @@ contract Supertoken is Context, Interface, TokenDetails {
         string contractSymbol = TokenDetails(contractAddress).symbol();
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
-            _mint(_msgSender(), ConvertLib.convert(amount, contractSymbol, symbol()));
+            uint256 marketRate = ConvertLib.convert(amount, contractSymbol, symbol());
+            _mint(_msgSender(), marketRate);
             return true;
         } else {
             return false;
