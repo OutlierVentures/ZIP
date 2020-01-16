@@ -52,7 +52,7 @@ The default Supertoken design is that users interact with any token in the stack
 1. Gas Stations Network will need be to implemented for transactions after the Supertoken -> base swap takes place.
 2. Token pool management and monetary policy will need to make a greater number of considerations for gas fees.
 
-Implementing Gas Stations Network has a strong advantage in differentiating the project from Uniswap at the Ethhereum token level.
+Implementing Gas Stations Network has a strong advantage in differentiating the project from Uniswap at the Ethereum token level.
 
 ## Gas stabilisation mechanism options
 
@@ -75,7 +75,29 @@ Key points:
 - Price oracle data is more trusted on Ethereum through oracles such as Chain
 - In the CStack, Fetch.AI is currently the most viable non-Ethereum chain to implement gas stability and redemption for.
 
+## The benefits: without the CStack token vs with the CStack token
 
-## With CStack token vs without
+### Without the CStack token
 
-TODO
+1. User wants to use network X.
+2. User goes to an exchange and purchases token X.
+3. User transfers token X to their wallet and waits for them to arrive.
+4. User purchases a compute job on network X using token X.
+5. User wants to use network Y.
+6. User goes to an exchange and purchases token Y.
+7. User transfers token Y to their wallet and waits for them to arrive.
+8. User purchases a compute job on network Y using token Y.
+9. User wants to use network Z.
+10. User goes to an exchange and purchases token Z.
+11. User transfers token Z to their wallet and waits for them to arrive.
+12. User purchases a compute job on network Z using token Z.
+...
+
+In other words, the user needs to purchase a separate token and transfer it to their wallet every time they want to use a given network. They have to know the correct token to buy and where to buy it (which often differs depending on network). They also rack up significant gas fees and time cost.
+
+### With the CStack token
+
+1. User purchases the CStack Token.
+2. User uses the CStack Token on any of the underlying networks like a prepaid card.
+
+A further benefit of the CStack token is that it may be purchased both as normal on an exchange, but may also be acquired by depositing any of the underlying tokens in exchange for the CStack token - no exchanges needed.
