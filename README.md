@@ -43,6 +43,8 @@ The Supertoken is a basket of tokens which may be used to pay for network fees, 
 
 The Supertoken thereby becomes an ERC20 token which may be used across any of the underlying networks by simply specifying the network at transaction time.
 
+Deposits and withdrawals currently implement a 2.5% fee to cover gas costs and LINK token costs.
+
 ### Gas Stations Network addition
 
 The default Supertoken design is that users interact with any token in the stack using the Supertoken, but also have Ether in their wallet to cover the fees. This may be circumvented by implementing Gas Stations Network, however this significantly increases the complexity of the project, notably:

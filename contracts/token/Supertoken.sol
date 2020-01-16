@@ -240,7 +240,7 @@ contract Supertoken is Context, Interface, TokenDetails {
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
             uint256 marketRate = ConvertLib.convert(amount, contractSymbol, symbol());
-            uint256 fee = marketRate / 100;
+            uint256 fee = marketRate / 40;
             _mint(_msgSender(), marketRate - fee);
             return true;
         } else {
@@ -260,7 +260,7 @@ contract Supertoken is Context, Interface, TokenDetails {
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
         uint amountRedeemed = ConvertLib.convert(amount, contractSymbol, symbol());
-        uint256 fee = amountRedeemed / 100;
+        uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
         bool success = Interface(contractAddress).transferFrom(address(this), _msgSender(), amountRedeemed - fee);
         return success;
