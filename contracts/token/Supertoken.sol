@@ -249,8 +249,7 @@ contract Supertoken is Context, Interface, TokenDetails {
     }
 
     /**
-     * @dev Redeems Supertokens for the token used to pay for a given job.
-     * Can also be used to exchange Supertokens for a base token of choice.
+     * @dev Redeems Supertokens for any of the base tokens in the basket.
      * The redeemed token must implement the ERC20-optional symbol() method.
      * The supertokens are burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
