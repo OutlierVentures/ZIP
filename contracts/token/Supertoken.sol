@@ -262,7 +262,7 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
         uint amountRedeemed = ConvertLib.convert(amount, contractSymbol, symbol());
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
-        increaseExternalAllowance(contractAddress, _msgSender(), amounRedeemed - fee);
+        increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
         return true;
     }
 
