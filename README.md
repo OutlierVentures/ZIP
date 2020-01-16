@@ -43,6 +43,15 @@ The Supertoken is a basket of tokens which may be used to pay for network fees, 
 
 The Supertoken thereby becomes an ERC20 token which may be used across any of the underlying networks by simply specifying the network at transaction time.
 
+### Gas Stations Network addition
+
+The default Supertoken design is that users interact with any token in the stack using the Supertoken, but also have Ether in their wallet to cover the fees. This may be circumvented by implementing Gas Stations Network, however this significantly increases the complexity of the project, notably:
+
+1. Gas Stations Network will need be to implemented for transactions after the Supertoken -> base swap takes place.
+2. Token pool management and monetary policy will need to make a greater number of considerations for gas fees.
+
+Implementing Gas Stations Network has a strong advantage in differentiating the project from Uniswap at the Ethhereum token level.
+
 ## Gas stabilisation mechanism options
 
 There are two options for stabilising gas using a futures market:
