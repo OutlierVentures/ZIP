@@ -39,7 +39,7 @@ Note that token and gas price are not inherently correlated, only network conges
 
 The Supertoken is an ERC20-compliant token based largely on the OpenZeppelin reference for Solidity 0.5. It is a mint/burn model backed by a basket of tokens.
 
-The Supertoken is a basket of tokens which may be used to pay for network fees, as well as ETH to cover gas. At any time, anyone may redeem Supertokens for their chosen underlying token specified by that token's contract address. The deposited Supertokens are converted to the underlying tokens according to their market value in ETH. This price feed is achieved using Chainlink oracles. Similarly, underlying tokens may be deposited in the contract, minting Supertokens at the market rate for the depositor. Minimum token balances are required for mint/burn calls, and setting these minimum balances is only available to the contract owner (the value may be voted on using off-chain governance).
+The Supertoken is a basket of tokens which may be used to pay for network fees, as well as ETH to cover gas. At any time, anyone may spend Supertokens as if they were their chosen underlying token (specified by that token's contract address) through a token allowance model. The deposited Supertokens are converted to the underlying tokens according to their market value in ETH. This price feed is achieved using Chainlink oracles. Similarly, underlying tokens may be deposited in the contract, minting Supertokens at the market rate for the depositor. Minimum token balances are required for mint/burn calls, and setting these minimum balances is only available to the contract owner (the value may be voted on using off-chain governance).
 
 The Supertoken thereby becomes an ERC20 token which may be used across any of the underlying networks by simply specifying the network at transaction time.
 
@@ -74,3 +74,8 @@ Key points:
 - Solidity and Etch are both equally capable of running a smart-contract based futures exchange, however interoperability for the redemption for gas component makes this better suited to Ethereum, as it natively covers 10+ tokens in the CStack rather than one.
 - Price oracle data is more trusted on Ethereum through oracles such as Chain
 - In the CStack, Fetch.AI is currently the most viable non-Ethereum chain to implement gas stability and redemption for.
+
+
+## With CStack token vs without
+
+TODO
