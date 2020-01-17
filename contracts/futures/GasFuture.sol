@@ -61,10 +61,9 @@ contract GasFuture {
     }
 
     function settle() public payable {
-        if (block.timestamp > start_date + length_days * 1 days) {
-            seller.transfer(price);
-            escrow_balance -= price;
-        }
+        require(block.timestamp > start_date + length_days * 1 days, "Contract not yet expired.");
+        seller.transfer(price);
+        escrow_balance -= price;
     }
 
     // TODO Function to redeem RightToGas for a portion of the future, where the seller buys the equivalent.
