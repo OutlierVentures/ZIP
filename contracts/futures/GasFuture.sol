@@ -25,7 +25,7 @@ contract GasFuture {
 
     // The buyer and seller accept the terms by calling this function.
     function accept() public {
-        if (msg.sender == buyer){
+        if (msg.sender == buyer) {
             buyerAccepts = true;
         } else if (msg.sender == seller) {
             sellerAccepts = true;
@@ -46,9 +46,10 @@ contract GasFuture {
     }
 
     function deposit() public payable {
-        if (msg.sender == buyer && buyerAccepts && sellerAccepts) {
-            escrow_balance += msg.value;
-        }
+        require(msg.sender == buyer, "Caller is not the buyer of this contract");
+        require(buyerAccepts, "Buyer has not yet accepted terms");
+        require(sellerAccepts, "Seller has not yet accepted terms");
+        escrow_balance += msg.value;
     }
 
     // Start the contract within a day of initializing, assuming the full price is paid down, otherwise return funds.
@@ -61,7 +62,7 @@ contract GasFuture {
     }
 
     function settle() public payable {
-        require(block.timestamp > start_date + length_days * 1 days, "Contract not yet expired.");
+        require(block.timestamp > start_date + length_days * 1 days, "Contract not yet expired");
         seller.transfer(price);
         escrow_balance -= price;
     }
