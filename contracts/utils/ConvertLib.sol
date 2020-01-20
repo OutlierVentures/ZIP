@@ -52,6 +52,24 @@ contract ConvertLib is ChainlinkClient {
 		sendChainlinkRequest(req, payment);
 	}
 
+	// Creates a Chainlink request with the uint256 multiplier job
+	function requestPriceInUSD(string symbol) public onlyOwner {
+		// Check LINK balance is sufficient
+		require(Interface(address("0x514910771af9ca656af840dff83e8264ecf986ca")).balanceOf(address(this)) >= minLinkBalance,
+				"LINK balance of conversion contract is insufficient");
+		bytes32 jobId = keccak256(block.number, msg.data, nonce++);
+		// newRequest takes a JobID, a callback address, and callback function as input
+		Chainlink.Request memory req = buildChainlinkRequest(jobId, this, this.fulfill.selector);
+		// Adds a URL with the key "get" to the request parameters
+		req.add("get", "https://min-api.cryptocompare.com/data/price?fsym=" + symbol + "&tsyms=USD");
+		// Uses input param (dot-delimited string) as the "path" in the request parameters
+		req.add("path", "USD");
+		// Request integer value in cents
+		req.addInt("times", 100);
+		// Sends the request with the amount of payment specified to the oracle
+		sendChainlinkRequest(req, payment);
+	}
+
 	// Use recordChainlinkFulfillment to ensure only the requesting oracle can fulfill. Outputs uint256.
 	function fulfill(bytes32 _requestId, uint256 _price) public recordChainlinkFulfillment(_requestId) {
 		currentPrice = _price;
