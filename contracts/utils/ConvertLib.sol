@@ -34,6 +34,11 @@ contract ConvertLib is ChainlinkClient {
 		return (priceInputETH / priceOutputETH) * amount;
 	}
 
+	function getPrice(uint256 amount, string symbol) public pure returns (uint256 price) {
+		requestPriceInUSD(symbol);
+		return currentPrice;
+	}
+
 	// Creates a Chainlink request with the uint256 multiplier job
 	function requestPriceInETH(string symbol) public onlyOwner {
 		// Check LINK balance is sufficient
