@@ -64,6 +64,7 @@ contract GasFuture {
     function start() public payable {
         if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
             Interface(basetokenAddress).transferFrom(seller, supertokenAddress, numberOfTokens);
+            Supertoken(supertokenAddress).deposit(basetokenAddress, numberOfTokens); // WARN account for Supertoken fees
         } else {
             selfdestruct(buyer);
         }
@@ -71,11 +72,9 @@ contract GasFuture {
 
     function settle() public payable {
         require(block.timestamp > start_date + length_days * 1 days, "Contract not yet expired");
+        Interface(supertokenAddress).transfer(buyer, numberOfTokens);
         seller.transfer(price);
         escrow_balance -= price;
     }
-
-    // TODO Function to redeem RightToGas for a portion of the future, where the seller buys the equivalent.
-    // Seller must be required to purhcase a 'normal' speed transaction quantity of gas.
 
 }
