@@ -34,8 +34,12 @@ contract ConvertLib is ChainlinkClient {
 		return (priceInputETH / priceOutputETH) * amount;
 	}
 
-	function getPrice(uint256 amount, string symbol) public pure returns (uint256 price) {
-		return 0;
+	// Returns the number of tokens for a given USD input in billionths of a token
+	function usdToTokens(uint256 amountInCents, string symbol) public pure returns (uint256 price) {
+		requestUSDtoTokens(symbol);
+		uint256 dollarValInGigaSD = currentPrice;
+		uint256 numberOfTokens = (amountInCents * dollarValInGigaSD) / 100;
+		return numberOfTokens;
 	}
 
 	// Creates a Chainlink request with the uint256 multiplier job
