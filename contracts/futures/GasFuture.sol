@@ -10,19 +10,15 @@ contract GasFuture {
     address payable public seller;
     address public basetokenAddress;
     address public supertokenAddress;
-    uint private price;
-    uint private start_date;
-    uint private length_days;
-    uint private numberOfTokens;
-    uint escrow_balance;
-    bool buyerAccepts;
-    bool sellerAccepts;
+    uint256 private price;
+    uint256 private start_date;
+    uint256 private length_days;
+    uint256 private numberOfTokens;
+    uint256 private escrow_balance;
+    bool private buyerAccepts;
+    bool private sellerAccepts;
 
-    mapping (address => uint) balances;
-
-	event Transfer(address indexed _from, address indexed _to, uint256 _value);
-
-	constructor(address payable buyer_address, address payable seller_address, uint agreed_price_in_eth, uint contract_length_days) public {
+	constructor(address payable buyer_address, address payable seller_address, uint256 agreed_price_in_eth, uint256 contract_length_days) public {
         start_date = block.timestamp;
         buyer = buyer_address;
         seller = seller_address;
