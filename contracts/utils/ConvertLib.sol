@@ -25,6 +25,8 @@ contract ConvertLib is ChainlinkClient {
 		payment = amount;
 	}
 
+	// Converts the amount in one token to another
+	// Issues with Web3 BigNumber for 100M+ tokens
 	function convert(uint256 amount, string inputSymbol, string outputSymbol) public pure returns (uint256 convertedAmount) {
 		// TODO Wait for data to be available from request (wait for Event fire?)
 		requestPriceInETH(inputSymbol);
@@ -35,6 +37,7 @@ contract ConvertLib is ChainlinkClient {
 	}
 
 	// Returns the number of tokens for a given USD input in billionths of a token
+	// Issues with Web3 BigNumber for dollar values of 1M+
 	function usdToTokens(uint256 amountInCents, string symbol) public pure returns (uint256 price) {
 		requestUSDtoTokens(symbol);
 		uint256 dollarValInGigaSD = currentPrice;
