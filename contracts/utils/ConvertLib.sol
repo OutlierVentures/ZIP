@@ -25,8 +25,7 @@ contract ConvertLib is ChainlinkClient {
 		payment = amount;
 	}
 
-	// Converts the amount in one token to another
-	// Issues with Web3 BigNumber for 100M+ tokens
+	// Converts the amount in one token to another, danger: Web3 BigNumber
 	function convert(uint256 amount, string inputSymbol, string outputSymbol) public pure returns (uint256 convertedAmount) {
 		// TODO Wait for data to be available from request (wait for Event fire?)
 		requestPriceInETH(inputSymbol);
@@ -36,8 +35,7 @@ contract ConvertLib is ChainlinkClient {
 		return (priceInputETH / priceOutputETH) * amount;
 	}
 
-	// Returns the number of tokens for a given USD input in billionths of a token
-	// Issues with Web3 BigNumber for dollar values of 1M+
+	// Returns the number of tokens for a given USD input in 10^-18 of a token, danger: Web3 BigNumber
 	function usdToTokens(uint256 amountInCents, string symbol) public pure returns (uint256 price) {
 		requestUSDtoTokens(symbol);
 		uint256 dollarValInGigaSD = currentPrice;
@@ -57,8 +55,8 @@ contract ConvertLib is ChainlinkClient {
 		req.add("get", "https://min-api.cryptocompare.com/data/price?fsym=" + symbol + "&tsyms=ETH");
 		// Uses input param (dot-delimited string) as the "path" in the request parameters
 		req.add("path", "ETH");
-		// Request integer value in Gwei - ASSUMES PRICE NEVER BELOW 1 GWEI (not worth it for user given fees)
-		req.addInt("times", 1000000000);
+		// Request integer value in wei - may cause issues with web3 BigNumber
+		req.addInt("times", 1000000000000000000);
 		// Sends the request with the amount of payment specified to the oracle
 		sendChainlinkRequest(req, payment);
 	}
@@ -75,8 +73,8 @@ contract ConvertLib is ChainlinkClient {
 		req.add("get", "https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=" + symbol);
 		// Uses input param (dot-delimited string) as the "path" in the request parameters
 		req.add("path", symbol);
-		// Request integer value in Giga-smallest-denom - ASSUMES PRICE NEVER BELOW 1 (not worth it for user given fees)
-		req.addInt("times", 1000000000);
+		// Request integer value in smallest denomination  - may cause issues with web3 BigNumber
+		req.addInt("times", 1000000000000000000);
 		// Sends the request with the amount of payment specified to the oracle
 		sendChainlinkRequest(req, payment);
 	}
