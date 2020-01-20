@@ -1,5 +1,7 @@
 pragma solidity ^0.5.0;
 
+import "../token/Interface.sol";
+
 contract GasFuture {
 
     address payable public buyer;
