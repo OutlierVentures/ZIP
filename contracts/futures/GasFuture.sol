@@ -60,7 +60,11 @@ contract GasFuture {
         escrow_balance += msg.value;
     }
 
-    // Start the contract within a day of initializing, assuming the full price is paid down, otherwise return funds.
+    /**
+     * Start the contract within a day of initializing, assuming the full price is paid down, otherwise return funds.
+     * Successful start transfers the base tokens to this contract's address. The contract deposits these in exchange
+     * for Supertokens, which grants an allowance from the basket with Supertoken.redeem().
+     */
     function start() public payable {
         if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
             Interface(basetokenAddress).transferFrom(seller, supertokenAddress, numberOfTokens);
@@ -70,6 +74,10 @@ contract GasFuture {
         }
     }
 
+    /**
+     * Settle the contract after its expiry. Successful settlement transfers this contract's Supertokens to the buyer
+     * and the escrow balance to the seller. The buyer can use the Supertokens to pay for gas with Supertoken.redeem().
+     */
     function settle() public payable {
         require(block.timestamp > start_date + length_days * 1 days, "Contract not yet expired");
         Interface(supertokenAddress).transfer(buyer, numberOfTokens);
