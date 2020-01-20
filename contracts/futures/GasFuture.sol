@@ -1,14 +1,19 @@
 pragma solidity ^0.5.0;
 
 import "../token/Interface.sol";
+import "../token/Supertoken.sol";
+import "../utils/ConvertLib.sol";
 
 contract GasFuture {
 
     address payable public buyer;
     address payable public seller;
+    address public basetokenAddress;
+    address public supertokenAddress;
     uint private price;
     uint private start_date;
     uint private length_days;
+    uint private numberOfTokens;
     uint escrow_balance;
     bool buyerAccepts;
     bool sellerAccepts;
@@ -17,12 +22,13 @@ contract GasFuture {
 
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-	constructor(address payable buyer_address, address payable seller_address, uint agreed_price, uint contract_length_days) public {
+	constructor(address payable buyer_address, address payable seller_address, uint agreed_price_in_eth, uint contract_length_days) public {
         start_date = block.timestamp;
         buyer = buyer_address;
         seller = seller_address;
-        price = agreed_price;
+        price = agreed_price_in_eth;
         length_days = contract_length_days;
+        numberOfTokens = convert(price, symbol, "ETH");
 	}
 
     // The buyer and seller accept the terms by calling this function.
@@ -57,7 +63,7 @@ contract GasFuture {
     // Start the contract within a day of initializing, assuming the full price is paid down, otherwise return funds.
     function start() public payable {
         if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
-            seller.transfer(price);
+            Interface(basetokenAddress).transferFrom(seller, supertokenAddress, numberOfTokens);
         } else {
             selfdestruct(buyer);
         }
