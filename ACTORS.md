@@ -12,7 +12,13 @@
                 . Tribal
             - Enterprise
 2. Enterprises
+    To divide based on industry.
 3. Consumers
+    A. Innovators
+    B. Early adopters
+    C. Early majority
+    D. Late majority
+    E. Laggards
 4. Investors
  A. Long-term
  B. Speculators
