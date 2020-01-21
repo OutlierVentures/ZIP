@@ -20,8 +20,23 @@
     D. Late majority
     E. Laggards
 4. Investors
- A. Long-term
- B. Speculators
+    A. Crypto-native
+        i. Funds
+            - Long-term
+            - Speculators, inc. futures
+        ii. Private
+            - Long-term
+            - Speculators, inc. futures
+    B. Non crypto-native
+        i. Funds
+            - Long-term
+            - Speculators, inc. futures
+        ii. Private
+            - Long-term
+            - Speculators, inc. futures
+        iii. Institutional
+            - Long-term
+            - Speculators, inc. futures
 5. Exchanges
 6. Networks
 7. Network participants
