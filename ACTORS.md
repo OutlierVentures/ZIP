@@ -27,21 +27,11 @@
 4. Investors
     A. Crypto-native
         i. Funds
-            - Long-term
-            - Speculators, inc. futures
         ii. Private
-            - Long-term
-            - Speculators, inc. futures
     B. Non crypto-native
         i. Funds
-            - Long-term
-            - Speculators, inc. futures
         ii. Private
-            - Long-term
-            - Speculators, inc. futures
         iii. Institutional
-            - Long-term
-            - Speculators, inc. futures
 5. Exchanges
     A. Centralised
         i. FIAT gateway
