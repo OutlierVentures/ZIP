@@ -52,3 +52,38 @@
 8. Regulators
     A. Non-US
     B. US
+
+## Value Exchange Map
+
+Only developers and investors interact directly with the CStack. Value exchanges:
+
+1. Money in from developers.
+2. Money in from and out to investors.
+
+Enterprises interact indirectly with the CStack through developers. Value exchange:
+
+1. Money in to developers from enterprises.
+
+Consumers interact (doubly) indirectly with the CStack through enterprises. Value exchange:
+
+1. Money in to enterprises from consumers.
+
+To motivate these actors to use the CStack:
+
+1. The CStack needs to act as a speculative instrument for investors.
+2. The CStack needs to provide convenience to developers.
+3. Developers need to fulfill enterprise demand, cost-saving or revenue generation.
+4. Enterprises need to provide convenience to consumers.
+
+The CStack should make it easy for:
+
+1. Investors to speculate on the (units of work of the) CStack.
+2. Developers to buy units of work on the CStack.
+3. Developers to create cost-saving or revenue generation opportunities for enterprises.
+4. Enterprises to make money from consumers by meeting demand.
+
+## Consumer Demand
+
+- Privacy
+- Finance (esp. cross-border)
+- Learn from GTM of wallets
