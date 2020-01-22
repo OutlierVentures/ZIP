@@ -12,7 +12,12 @@
                 . Tribal
             - Enterprise
 2. Enterprises
-    To divide based on industry.
+    A. Blockchain as a service / product (capital-generation)
+        i. SME
+        ii. Large enterprise
+    B. Blockchain for operations (cost-saving)
+        i. SME
+        ii. Large enterprise
 3. Consumers
     A. Innovators
     B. Early adopters
@@ -38,8 +43,22 @@
             - Long-term
             - Speculators, inc. futures
 5. Exchanges
+    A. Centralised
+        i. FIAT gateway
+        ii. Non-FIAT gateway
+    B. Decentralised
 6. Networks
+    A. Tokenised
+        i. Blockchain-native gas
+        ii. App layer (ERC20-like)
+    B. Non-tokenised
 7. Network participants
- A. Node operators
- B. Stakers
+    A. Node operators
+        i. Individuals
+        ii. Service providers
+    B. Stakers
+        i. Market-layer participants (e.g. staking pools / Lunie)
+        ii. Ledger-layer participants (e.g. Chorus One)
 8. Regulators
+    A. Non-US
+    B. US
