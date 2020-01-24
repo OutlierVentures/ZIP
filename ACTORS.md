@@ -94,3 +94,10 @@ Consumers interact (doubly) indirectly with the CStack through enterprises. Valu
     1. FUEL pegged to certain amount of compute (eg. X FLOPS).
     2. If price is above target, speculators have an incentive to create new FUEL and sell at a ‘premium’ price.
     3. If price is below target, speculators have incentive to repurchase FUEL (reduce supply) to decrease their leverage at a discount.
+
+## Future work
+
+* Setting collateral balance requirements and minting policies.
+* Basket weights.
+* Research usage price volatility and token price volatility.
+* Research measurable units of compute across network (eg. $/FLOPS).
