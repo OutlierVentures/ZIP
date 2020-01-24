@@ -1,89 +1,87 @@
 # Actor Mapping
 
 1. Developers
-    A. Indviduals
-    B. Dev teams
-        i. Web 2
-            - Independent
-            - Enterprise
-        ii. Web 3
-            - Independent
-                . Protocol-agnostic
-                . Tribal
-            - Enterprise
+    1. Indviduals
+    2. Dev teams
+        1. Web 2
+            1. Independent
+            2. Enterprise
+        2. Web 3
+            1. Independent
+                1. Protocol-agnostic
+                2. Tribal
+            2. Enterprise
 2. Enterprises
-    A. Blockchain as a service / product (capital-generation)
-        i. SME
-        ii. Large enterprise
-    B. Blockchain for operations (cost-saving)
-        i. SME
-        ii. Large enterprise
+    1. Blockchain as a service / product (capital-generation)
+        1. SME
+        2. Large enterprise
+    2. Blockchain for operations (cost-saving)
+        1. SME
+        2. Large enterprise
 3. Consumers
-    A. Innovators
-    B. Early adopters
-    C. Early majority
-    D. Late majority
-    E. Laggards
+    1. Innovators
+    2. Early adopters
+    3. Early majority
+    4. Late majority
+    5. Laggards
 4. Investors
-    A. Crypto-native
-        i. Funds
-        ii. Private
-    B. Non crypto-native
-        i. Funds
-        ii. Private
-        iii. Institutional
+    1. Crypto-native
+        1. Funds
+        2. Private
+    2. Non crypto-native
+        1. Funds
+        2. Private
+        3. Institutional
 5. Exchanges
-    A. Centralised
-        i. FIAT gateway
-        ii. Non-FIAT gateway
-    B. Decentralised
+    1. Centralised
+        1. FIAT gateway
+        2. Non-FIAT gateway
+    2. Decentralised
 6. Networks
-    A. Tokenised
-        i. Blockchain-native gas
-        ii. App layer (ERC20-like)
-    B. Non-tokenised
+    1. Tokenised
+        1. Blockchain-native gas
+        2. App layer (ERC20-like)
+    2. Non-tokenised
 7. Network participants
-    A. Node operators
-        i. Individuals
-        ii. Service providers
-    B. Stakers
-        i. Market-layer participants (e.g. staking pools / Lunie)
-        ii. Ledger-layer participants (e.g. Chorus One)
+    1. Node operators
+        1. Individuals
+        2. Service providers
+    2. Stakers
+        1. Market-layer participants (e.g. staking pools / Lunie)
+        2. Ledger-layer participants (e.g. Chorus One)
 8. Regulators
-    A. Non-US
-    B. US
+    1. Non-US
+    2. US
 
 ## Value Exchange Map
 
-Only developers and investors interact directly with the CStack. Value exchanges:
+### Direct interactions
 
-1. Money in from developers.
-2. Money in from and out to investors.
+Consumers, investors and developers interact directly with the CStack. Value exchanges:
+
+1. Money in from consumers in exchange for convenience.
+2. Money in from developers in exchange for convenience.
+3. Money in from and out to investors speculating on the price of compute.
+
+### Indirect interactions
 
 Enterprises interact indirectly with the CStack through developers. Value exchange:
 
-1. Money in to developers from enterprises.
+1. Money in to developers from enterprises in exchange for cost-saving and/or revenue generation opportunities.
 
 Consumers interact (doubly) indirectly with the CStack through enterprises. Value exchange:
 
-1. Money in to enterprises from consumers.
+1. Money in to enterprises from consumers in exchange for convenience.
 
-To motivate these actors to use the CStack:
+### Motivating the value exchange
 
-1. The CStack needs to act as a speculative instrument for investors.
-2. The CStack needs to provide convenience to developers.
-3. Developers need to fulfill enterprise demand, cost-saving or revenue generation.
-4. Enterprises need to provide convenience to consumers.
+1. Convenience for consumers:
+    1. FIAT abstraction of tokens, useable across networks (FIAT gateway + meta-token + simple wallet interface).
+    2. Consumer-focused Stack benefits: self-sovereign identity, cheap cross-border remittance, privacy-preserving voice assistants, tipping creators etc.
+2. Convenience for developers:
+    1. FIAT abstraction of tokens, useable across networks (FIAT gateway + meta-token + simple wallet interface).
+    2. Developer-focused Stack benefits: private compute, decentralised databases, data marketplaces etc.
+3. The CStack needs to act as a speculative instrument for investors.
+4. The Cstack needs to make it easy for developers to create cost-saving and/or revenue generation opportunities for enterprises.
+5. The Cstack needs to make it easy for enterprises to create convenience for consumers.
 
-The CStack should make it easy for:
-
-1. Investors to speculate on the (units of work of the) CStack.
-2. Developers to buy units of work on the CStack.
-3. Developers to create cost-saving or revenue generation opportunities for enterprises.
-4. Enterprises to make money from consumers by meeting demand.
-
-## Consumer Demand
-
-- Privacy
-- Finance (esp. cross-border)
-- Learn from GTM of wallets
