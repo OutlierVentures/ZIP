@@ -95,6 +95,24 @@ Consumers interact (doubly) indirectly with the CStack through enterprises. Valu
     2. If price is above target, speculators have an incentive to create new FUEL and sell at a ‘premium’ price.
     3. If price is below target, speculators have incentive to repurchase FUEL (reduce supply) to decrease their leverage at a discount.
 
+## Infrastructure mapping
+
+1. Basket pair trading:
+    1. Uniswap - 0.3% fee
+    2. Chainlink / Oraclize - token costs equating to approx $0.50 per swap (2 x $0.25 per query)
+2. Token standards:
+    1. OpenZeppelin ERC20
+    2. ConsenSys ERC20
+    3. Fetch FetchNative-ERC20
+3. Gas containerisation
+    1. GasToken - storage refund exploit
+4. Native token in wallet requirement removal
+    1. Gas Stations Network
+        1. OpenZeppelin implementation
+        2. Portis implementation
+5. Futures contracts
+    1. VollgasDAO - Ethereum gas futures
+
 ## Future work
 
 * Setting collateral balance requirements and minting policies.
