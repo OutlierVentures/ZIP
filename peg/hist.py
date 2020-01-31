@@ -35,5 +35,27 @@ merged.index = merged.index.str.replace('/2019', '').str.replace('/2020', '')
 merged.plot()
 plt.savefig('hist.png')
 
+
+
 #ops_per_block = gas_limit / operation_gas_cost
 
+# Plot step function for pricing
+def highs_vs_means(operation_price_usd: pd.DataFrame, period: int):
+    num_prices = len(operation_price_usd)
+    num_periods = int(num_prices / period)
+    means = []
+    tops = []
+    for i in range(num_periods):
+        index_start = i * period
+        window = operation_price_usd["Value"][index_start:(index_start + period)]
+        for _ in range(period):
+            means.append(sum(window) / period)
+            tops.append(window.max())
+    means_tops = pd.DataFrame({'Mean': means, 'Price': tops}, index = operation_price_usd.index)
+    operation_price_usd = operation_price_usd.rename(columns = {'Value': 'Operation price (USD)'})
+    merged = pd.concat([operation_price_usd, means_tops], axis = 1)
+    merged.index = merged.index.str.replace('/2019', '').str.replace('/2020', '')
+    merged.plot()
+    plt.savefig('pricing.png')
+
+highs_vs_means(operation_price_usd[-182:], 7)
