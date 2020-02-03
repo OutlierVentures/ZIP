@@ -12,7 +12,7 @@ class SetPrice:
     def show_pricing(self):
         gas_limit, gas_price, eth_price = self.get_data()
         operation_price_usd = self.pricing_usd(gas_limit, gas_price, eth_price)
-        self.highs_vs_means(operation_price_usd, 30)        
+        self.highs_vs_means(operation_price_usd, 90)        
 
     def get_data(self):
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
@@ -54,8 +54,8 @@ class SetPrice:
                 tops.append(window.max())
             """
             if i:
-                forecasted_mean = 2 * mean - means[-1] # y = mx + c
-                forecasted_top = 2 * top - tops[-1] # y = mx + c
+                forecasted_mean = (mean + means[-1]) / 2
+                forecasted_top = (top + tops[-1]) / 2
                 forecasted_means.append(forecasted_mean)
                 forecasted_tops.append(forecasted_top)
             means.append(mean)
