@@ -3,6 +3,10 @@ import pandas as pd
 class SetPrice:
 
     def get_data(self):
-        self.gas_limit = pd.read_csv("https://etherscan.io/chart/gaslimit?output=csv")
-        self.gas_price = pd.read_csv("https://etherscan.io/chart/gasprice?output=csv")
-        self.eth_price = pd.read_csv("https://etherscan.io/chart/etherprice?output=csv")
+        gas_limit = pd.read_csv("https://etherscan.io/chart/gaslimit?output=csv", index_col = 0)
+        gas_price = pd.read_csv("https://etherscan.io/chart/gasprice?output=csv", index_col = 0)
+        eth_price = pd.read_csv("https://etherscan.io/chart/etherprice?output=csv", index_col = 0)
+        gas_limit = gas_limit.drop('UnixTimeStamp', 1)
+        gas_price = gas_price.drop('UnixTimeStamp', 1)
+        eth_price = eth_price.drop('UnixTimeStamp', 1)
+    
