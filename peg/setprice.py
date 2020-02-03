@@ -9,4 +9,9 @@ class SetPrice:
         gas_limit = gas_limit.drop('UnixTimeStamp', 1)
         gas_price = gas_price.drop('UnixTimeStamp', 1)
         eth_price = eth_price.drop('UnixTimeStamp', 1)
+        gas_price = gas_price.rename(columns = {'Value (Wei)': 'Value'})
+        self.gas_limit = gas_limit
+        self.gas_price = gas_price
+        self.eth_price = eth_price
+
     
