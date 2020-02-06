@@ -66,6 +66,8 @@ class SetPrice:
         operation_price_usd = operation_price_usd.rename(columns = {"Value": "Operation price (USD)"})
         merged = pd.concat([operation_price_usd, forecasted_means_tops], axis = 1)
         merged.index = merged.index.str.replace("/20", "/")
+        merged = merged[180:]
+        plt.style.use('dark_background')
         merged.plot()
         plt.savefig("pricing.png")
 
