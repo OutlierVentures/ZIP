@@ -80,6 +80,7 @@ class SetPrice:
         used_ops_per_tx = num_used_ops / num_tx[-len(margin):]
         print(used_ops_per_tx)
         margin = margin * used_ops_per_tx
+        print("Margin per tx (Cstack daily tx currently at 10k):")
         print(sum(margin['Value']) / len(margin['Value']))
 
         operation_price_usd = operation_price_usd.rename(columns = {"Value": "Operation price (USD)"})
