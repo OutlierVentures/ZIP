@@ -12,7 +12,6 @@ npm i -g truffle
 npm i
 ```
 
-
 ## Deploy contracts
 
 ```sh
@@ -32,6 +31,10 @@ Barriers to adoption and UX issues, in order of importance:
 
 ## Intended solution
 
+<p align="center">
+    <img src="./docs/overview.png" width="500" />
+</p>
+
 1. A super-token redeemed for the relevant underlying token through smart contracts and the time of executing ledger operations.
 2. A smart contract-based gas futures market to stabilise the cost of fees.
 3. A fiat gateway/abstraction layer hiding the token cost, which ultimately should not be stabilised for the sake of investability.
@@ -44,9 +47,17 @@ The Supertoken is an ERC20-compliant token based largely on the OpenZeppelin ref
 
 The Supertoken is a basket of tokens which may be used to pay for network fees, as well as ETH to cover gas. At any time, anyone may spend Supertokens as if they were their chosen underlying token (specified by that token's contract address) through a token allowance model. The deposited Supertokens are converted to the underlying tokens according to their market value in ETH. This price feed is achieved using Chainlink oracles. Similarly, underlying tokens may be deposited in the contract, minting Supertokens at the market rate for the depositor. Minimum token balances are required for mint/burn calls, and setting these minimum balances is only available to the contract owner (the value may be voted on using off-chain governance).
 
+<p align="center">
+    <img src="./docs/depositwithdraw.png" width="800" />
+</p>
+
 The Supertoken thereby becomes an ERC20 token which may be used across any of the underlying networks by simply specifying the network at transaction time.
 
 The stable pricing model applies a flat price updated quarterly (in development, see the `peg` folder). Deposits and withdrawals currently implement a 2.5% fee to cover gas costs and LINK token costs as an interim solution.
+
+<p align="center">
+    <img src="./docs/pricing.png" width="500" />
+</p>
 
 ### Gas Stations Network addition
 
@@ -66,6 +77,9 @@ A futures market can be used as an alternate stabilisation mechanism. See `contr
 
 The former is tried and tested, but relies on the ability to exploit refund mechanisms, which may be impossible on certain chains. The latter is inherently cross-chain compatible (by purchasing the relevant native chain token using the right to gas token, then using the native chain token to pay for gas). Notably, the second option also introduces significant transaction delay (on average doubling transaction time, assuming no exchange delay) as well as requires an actively traded token pair to function.
 
+<p align="center">
+    <img src="./docs/futures.png" width="800" />
+</p>
 Ultimately, a price peg (updated quarterly) as discussed above is a more viable solution.
 
 ## The benefits: without the Supertoken vs with the Supertoken
