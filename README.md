@@ -1,6 +1,8 @@
-# CStack Token
+# Multi-network gas station
 
-A single token to use across the stack and a gas futures market for stable gas.
+Blockchain cloud credits: a cross-chain stable token.
+
+Requires Node.JS, Python and Ethereum.
 
 ## Install
 
