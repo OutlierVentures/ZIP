@@ -1,32 +1,32 @@
-const RightToGas = artifacts.require("RightToGas");
+const Supertoken = artifacts.require("Supertoken");
 
-contract('RightToGas', function(accounts) {
-  it("should put 10000 RightToGas in the first account", function() {
-    return RightToGas.deployed().then(function(instance) {
+contract('Supertoken', function(accounts) {
+  it("should put 10000 Supertoken in the first account", function() {
+    return Supertoken.deployed().then(function(instance) {
       return instance.getBalance.call(accounts[0]);
     }).then(function(balance) {
       assert.equal(balance.valueOf(), 10000, "10000 wasn't in the first account");
     });
   });
   it("should call a function that depends on a linked library", function() {
-    var rtg;
-    var rightToGasBalance;
-    var rightToGasEthBalance;
+    var sup;
+    var supertokenBalance;
+    var supertokenEthBalance;
 
-    return RightToGas.deployed().then(function(instance) {
-      rtg = instance;
-      return rtg.getBalance.call(accounts[0]);
+    return Supertoken.deployed().then(function(instance) {
+      sup = instance;
+      return sup.getBalance.call(accounts[0]);
     }).then(function(outCoinBalance) {
-      rightToGasBalance = parseInt(outCoinBalance);
-      return rtg.getBalanceInEth.call(accounts[0]);
+      supertokenBalance = parseInt(outCoinBalance);
+      return sup.getBalanceInEth.call(accounts[0]);
     }).then(function(outCoinBalanceEth) {
-      rightToGasEthBalance = parseInt(outCoinBalanceEth);
+      supertokenEthBalance = parseInt(outCoinBalanceEth);
     }).then(function() {
-      assert.equal(rightToGasEthBalance, 2 * rightToGasBalance, "Library function returned unexpected function, linkage may be broken");
+      assert.equal(supertokenEthBalance, 2 * supertokenBalance, "Library function returned unexpected function, linkage may be broken");
     });
   });
   it("should send coin correctly", function() {
-    var rtg;
+    var sup;
 
     // Get initial balances of first and second account.
     var account_one = accounts[0];
@@ -39,20 +39,20 @@ contract('RightToGas', function(accounts) {
 
     var amount = 10;
 
-    return RightToGas.deployed().then(function(instance) {
-      rtg = instance;
-      return rtg.getBalance.call(account_one);
+    return Supertoken.deployed().then(function(instance) {
+      sup = instance;
+      return sup.getBalance.call(account_one);
     }).then(function(balance) {
       account_one_starting_balance = parseInt(balance);
-      return rtg.getBalance.call(account_two);
+      return sup.getBalance.call(account_two);
     }).then(function(balance) {
       account_two_starting_balance = parseInt(balance);
-      return rtg.sendCoin(account_two, amount, {from: account_one});
+      return sup.sendCoin(account_two, amount, {from: account_one});
     }).then(function() {
-      return rtg.getBalance.call(account_one);
+      return sup.getBalance.call(account_one);
     }).then(function(balance) {
       account_one_ending_balance = parseInt(balance);
-      return rtg.getBalance.call(account_two);
+      return sup.getBalance.call(account_two);
     }).then(function(balance) {
       account_two_ending_balance = parseInt(balance);
 
