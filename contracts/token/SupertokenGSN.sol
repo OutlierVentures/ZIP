@@ -245,8 +245,6 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal, GSNRecip
             uint256 fee = marketRate / 40;
             _mint(_msgSender(), marketRate - fee);
             return true;
-        } else {
-            return false;
         }
     }
 
