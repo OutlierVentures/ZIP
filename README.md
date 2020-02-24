@@ -1,10 +1,27 @@
-# Multi-network gas station
+<p align="center">
+    <img src="./docs/logo.png" width="500" />
+    <br><br>
+    <a href="#" alt="Cross-chain">
+        <img src="./docs/xchain.svg" />
+    </a>
+    <a href="#" alt="Stable">
+        <img src="./docs/stable.svg" />
+    </a>
+    <a href="https://outlierventures.io" alt="Convergence ready">
+        <img src="./docs/convergence.svg" />
+    </a>
+    <br><br>
+    Blockchain cloud credits: a cross-chain stable token.<br><br>
+    <i>An Outlier Ventures project.</i>
+</p>
 
-Blockchain cloud credits: a cross-chain stable token.
 
-Requires Node.JS and Python.
+
+
 
 ## Install
+
+Requires Node.JS and Python.
 
 ```sh
 pip3 install pandas matplotlib
@@ -108,3 +125,8 @@ In other words, the user needs to purchase a separate token and transfer it to t
 2. User uses the Supertoken on any of the underlying networks like a prepaid card.
 
 A further benefit of the CStack token is that it may be purchased both as normal on an exchange, but may also be acquired by depositing any of the underlying tokens in exchange for the CStack token - no exchanges needed.
+
+## Roadmap: next up
+
+1. GSN tests (see [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/test/GSN))
+2. Token migration contract / wrapped asset.
