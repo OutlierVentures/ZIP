@@ -75,10 +75,8 @@ class SetPrice:
         pricing = forecasted_means_tops.rename(columns = {"FUEL pricing": "Value"})
         margin = pricing - operation_price_usd
         margin = margin[180:]
-        print(margin)
         num_used_ops = gas_used[-len(margin):] / self.operation_gas_cost
         used_ops_per_tx = num_used_ops / num_tx[-len(margin):]
-        print(used_ops_per_tx)
         margin = margin * used_ops_per_tx
         print("Margin per tx (Cstack daily tx currently at 10k):")
         print(sum(margin['Value']) / len(margin['Value']))
@@ -87,7 +85,6 @@ class SetPrice:
         merged = pd.concat([operation_price_usd, forecasted_means_tops], axis = 1)
         merged.index = merged.index.str.replace("/20", "/")
         merged = merged[180:]
-        plt.style.use('dark_background')
         merged.plot()
         plt.savefig("pricing.png")
 
