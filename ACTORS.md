@@ -112,10 +112,3 @@ Consumers interact (doubly) indirectly with the CStack through enterprises. Valu
         2. Portis implementation
 5. Futures contracts
     1. VollgasDAO - Ethereum gas futures
-
-## Future work
-
-* Setting collateral balance requirements and minting policies.
-* Basket weights.
-* Research usage price volatility and token price volatility.
-* Research measurable units of compute across network (eg. $/FLOPS).
