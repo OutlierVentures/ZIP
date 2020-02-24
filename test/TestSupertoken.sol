@@ -2,24 +2,24 @@ pragma solidity >=0.4.22 <0.6.0;
 
 import "truffle/Assert.sol";
 import "truffle/DeployedAddresses.sol";
-import "../contracts/RightToGas.sol";
+import "../contracts/Supertoken.sol";
 
-contract TestRightToGas {
+contract TestSupertoken {
 
   function testInitialBalanceUsingDeployedContract() public {
-    RightToGas meta = RightToGas(DeployedAddresses.RightToGas());
+    Supertoken meta = Supertoken(DeployedAddresses.Supertoken());
 
     uint expected = 10000;
 
-    Assert.equal(meta.getBalance(msg.sender), expected, "Owner should have 10000 RightToGas initially");
+    Assert.equal(meta.getBalance(msg.sender), expected, "Owner should have 10000 Supertoken initially");
   }
 
-  function testInitialBalanceWithNewRightToGas() public {
-    RightToGas meta = new RightToGas();
+  function testInitialBalanceWithNewSupertoken() public {
+    Supertoken meta = new Supertoken();
 
     uint expected = 10000;
 
-    Assert.equal(meta.getBalance(msg.sender), expected, "Owner should have 10000 RightToGas initially");
+    Assert.equal(meta.getBalance(msg.sender), expected, "Owner should have 10000 Supertoken initially");
   }
 
 }
