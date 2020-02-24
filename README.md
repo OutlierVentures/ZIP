@@ -31,13 +31,13 @@ Barriers to adoption and UX issues, in order of importance:
 
 ## Intended solution
 
-<p align="center">
-    <img src="./docs/overview.png" width="500" />
-</p>
-
 1. A super-token redeemed for the relevant underlying token through smart contracts and the time of executing ledger operations.
 2. A smart contract-based gas futures market to stabilise the cost of fees.
 3. A fiat gateway/abstraction layer hiding the token cost, which ultimately should not be stabilised for the sake of investability.
+
+<p align="center">
+    <img src="./docs/overview.png" width="400" />
+</p>
 
 Note that token and gas price are not inherently correlated, only network congestion (which raises gas costs) tends to occur at the same time as token price increases due to increased trading volume. Stabilising gas costs will not stabilise token costs and vice versa.
 
