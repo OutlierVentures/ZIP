@@ -2,15 +2,16 @@
 
 Blockchain cloud credits: a cross-chain stable token.
 
-Requires Node.JS, Python and Ethereum.
+Requires Node.JS and Python.
 
 ## Install
 
 ```sh
+pip3 install pandas matplotlib
+npm i -g truffle
 npm i
 ```
 
-If you don't have truffle installed globally, install it: `npm i -g truffle`
 
 ## Deploy contracts
 
@@ -21,7 +22,7 @@ truffle migrate
 
 ## Problem statement
 
-To lower the barriers of adoption for creating and operating applications using multiple technologies in the CStack.  
+To lower the barriers of adoption for creating and operating applications using multiple blockchain networks.  
 
 Barriers to adoption and UX issues, in order of importance:
 
@@ -45,7 +46,7 @@ The Supertoken is a basket of tokens which may be used to pay for network fees, 
 
 The Supertoken thereby becomes an ERC20 token which may be used across any of the underlying networks by simply specifying the network at transaction time.
 
-Deposits and withdrawals currently implement a 2.5% fee to cover gas costs and LINK token costs.
+The stable pricing model applies a flat price updated quarterly (in development, see the `peg` folder). Deposits and withdrawals currently implement a 2.5% fee to cover gas costs and LINK token costs as an interim solution.
 
 ### Gas Stations Network addition
 
@@ -56,30 +57,20 @@ The default Supertoken design is that users interact with any token in the stack
 
 Implementing Gas Stations Network has a strong advantage in differentiating the project from Uniswap at the Ethereum token level.
 
-## Gas stabilisation mechanism options
+## A note on using futures to stabilise gas
 
-There are two options for stabilising gas using a futures market:
+A futures market can be used as an alternate stabilisation mechanism. See `contracts/futures` for exploratory work. There are two options for stabilising gas using a futures market:
 
 1. Accrual of gas itself through a refund exploit mechanism, as with [GasToken](https://github.com/projectchicago/gastoken). The gas is locked at the time of the futures contract's inception.
 2. A right to gas token which may be redeemed for gas at the time of transaction execution by liquidating the funds locked in a futures contract (e.g. ETH).
 
 The former is tried and tested, but relies on the ability to exploit refund mechanisms, which may be impossible on certain chains. The latter is inherently cross-chain compatible (by purchasing the relevant native chain token using the right to gas token, then using the native chain token to pay for gas). Notably, the second option also introduces significant transaction delay (on average doubling transaction time, assuming no exchange delay) as well as requires an actively traded token pair to function.
 
-## Solidity vs Etch implementations
+Ultimately, a price peg (updated quarterly) as discussed above is a more viable solution.
 
-Key points:
+## The benefits: without the Supertoken vs with the Supertoken
 
-- A meta-token for the entire CStack is better issued on Ethereum for three reasons:
-    1. Interoperability with virtually all wallets, improving UX significantly.
-    2. Interoperability with exchanges by default, making listings easier.
-    3. Ethereum and the ERC20 standard are battle-tested, allowing for more confidence in the token's safety.
-- Solidity and Etch are both equally capable of running a smart-contract based futures exchange, however interoperability for the redemption for gas component makes this better suited to Ethereum, as it natively covers 10+ tokens in the CStack rather than one.
-- Price oracle data is more trusted on Ethereum through oracles such as Chain.
-- In the CStack, Fetch.AI is currently the most viable non-Ethereum chain to implement gas stability and redemption for.
-
-## The benefits: without the CStack token vs with the CStack token
-
-### Without the CStack token
+### Without the Supertoken
 
 1. User wants to use network X.
 2. User goes to an exchange and purchases token X.
@@ -97,9 +88,9 @@ Key points:
 
 In other words, the user needs to purchase a separate token and transfer it to their wallet every time they want to use a given network. They have to know the correct token to buy and where to buy it (which often differs depending on network). They also rack up significant gas fees and time cost.
 
-### With the CStack token
+### With the Supertoken
 
-1. User purchases the CStack Token.
-2. User uses the CStack Token on any of the underlying networks like a prepaid card.
+1. User purchases the Supertoken.
+2. User uses the Supertoken on any of the underlying networks like a prepaid card.
 
 A further benefit of the CStack token is that it may be purchased both as normal on an exchange, but may also be acquired by depositing any of the underlying tokens in exchange for the CStack token - no exchanges needed.
