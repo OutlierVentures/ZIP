@@ -9,10 +9,11 @@ contract SimpleDapp is GSNRecipient {
     /**
      * @dev Example dapp function: spend a base token from the basket.
      */
-    function withdrawBasetoken() external returns (bool) {
+    function spendBaseToken() external returns (bool) {
         private st = Interface("0x514910771af9ca656af840dff83e8264ecf986ca") // Specify Supertoken address
         st.transfer(address(this), 100) // Send 100 fuel to dapp
         st.redeem("0x85117168851e99b6fa06bc8a58e035dc50587541", 100) // Grab 100 FUEL worth of FET
+        return true;
     }
 
     /**
