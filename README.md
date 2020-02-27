@@ -16,9 +16,6 @@
 </p>
 
 
-
-
-
 ## Install
 
 Requires Node.JS and Python.
@@ -125,6 +122,13 @@ In other words, the user needs to purchase a separate token and transfer it to t
 2. User uses the Supertoken on any of the underlying networks like a prepaid card.
 
 A further benefit of the CStack token is that it may be purchased both as normal on an exchange, but may also be acquired by depositing any of the underlying tokens in exchange for the CStack token - no exchanges needed.
+
+## Demo Dapp
+
+There is a demo dapp in the demo folder. By default, this uses test RPC; to use it on test/mainnet, deploy the dapp contract and supertoken contract to your net of choice. The demo dapp has two components:
+
+1. `deploySupertoken`: Move supertokens around addresses. Send some to your wallet for use in the dapp.
+2. `simpleDapp`: A dapp with a button that when pressed, transfers 100 FUEL to the dapp (normal metamask signing), and the dapp then spends it on FET.
 
 ## Roadmap: next up
 
