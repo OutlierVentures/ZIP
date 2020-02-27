@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  </head>
+  <body class="container" style="padding-top: 3%;">
+    <h2><a href="index.html">FUEL Dapp Example</a></h2>
+
+    <hr />
+
+    <div class="row">
+      <div class="column">
+        <br />
+        <button id="spendBaseTokens">Spend base tokens</button>
+      </div>
+    </div>
+
+    <div id="spendBaseTokensResponse" style="padding: 20px; display: none; border: 1px solid #9b4dca">
+    </div>
+
+    <hr />
+
+    <script type="text/javascript" src="https://raw.githubusercontent.com/ethjs/examples/master/ethereumjs-testrpc.js"></script> <!--Required if no metamask-->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ethjs@0.3.4/dist/ethjs.min.js"></script>
+    <script type="text/javascript" src="./deposit.js"></script>
+  </body>
+</html>
