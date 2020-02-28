@@ -125,7 +125,7 @@ A further benefit of the CStack token is that it may be purchased both as normal
 
 ## Demo Dapp
 
-There is a demo dapp in the demo folder. By default, this uses test RPC; to use it on test/mainnet, deploy the dapp contract and supertoken contract to your net of choice. The demo dapp has two components:
+There is a demo dapp in the demo folder. By default, this uses test RPC (node needs to be running); to use it on test/mainnet, deploy the dapp contract and supertoken contract to your net of choice. The demo dapp has two components:
 
 1. `deploySupertoken`: Move supertokens around addresses. Send some to your wallet for use in the dapp.
 2. `simpleDapp`: A dapp with a button that when pressed, transfers 100 FUEL to the dapp (normal metamask signing), and the dapp then spends it on FET.
