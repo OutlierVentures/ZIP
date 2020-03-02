@@ -1,5 +1,5 @@
 pragma solidity ^0.5.0;
-
+/*
 import "./Supertoken";
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
@@ -31,3 +31,4 @@ contract SupertokenGSN is Supertoken, GSNRecipient {
     }
 
 }
+*/
