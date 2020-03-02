@@ -37,7 +37,72 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertL
 
     mapping (address => mapping (address => uint256)) private _allowances;
 
+    
+    address public contractOwner;
+    uint256 public _minEthBalance;
     uint256 private _totalSupply;
+    string private _name;
+    string private _symbol;
+    uint8 private _decimals;
+    
+    /**
+     * @dev Sets the values for `name`, `symbol`, and `decimals`. All three of
+     * these values are immutable: they can only be set once during construction.
+     */
+    constructor (string memory name, string memory symbol, uint8 decimals) public {
+        _name = name;
+        _symbol = symbol;
+        _decimals = decimals;
+        owner = msg.sender; // Set to contract deployer
+    }
+
+    /**
+     * @dev Returns the name of the token.
+     */
+    function name() public view returns (string memory) {
+        return _name;
+    }
+
+    /**
+     * @dev Returns the symbol of the token, usually a shorter version of the
+     * name.
+     */
+    function symbol() public view returns (string memory) {
+        return _symbol;
+    }
+
+    /**
+     * @dev Returns the number of decimals used to get its user representation.
+     * For example, if `decimals` equals `2`, a balance of `505` tokens should
+     * be displayed to a user as `5,05` (`505 / 10 ** 2`).
+     *
+     * Tokens usually opt for a value of 18, imitating the relationship between
+     * Ether and Wei.
+     *
+     * NOTE: This information is only used for _display_ purposes: it in
+     * no way affects any of the arithmetic of the contract, including
+     * {IERC20-balanceOf} and {IERC20-transfer}.
+     */
+    function decimals() public view returns (uint8) {
+        return _decimals;
+    }
+
+    /**
+     * @dev Set the minimumEthBalance of the contract to cover gas.
+     * Not eligible for relayed calls.
+     */
+    function setMinEthBalance(uint256 amount) public onlyOwner {
+        _minEthBalance = amount;
+    }
+
+    /**
+     * @dev Modifier for functions callable only by the contract owner.
+     * Not eligible for relayed calls.
+     */
+    modifier onlyOwner() {
+		require(msg.sender == contractOwner, "Message sender must be contract owner");
+		_;
+	}
 
     /**
      * @dev See {Interface-totalSupply}.
