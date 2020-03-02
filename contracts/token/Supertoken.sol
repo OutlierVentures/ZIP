@@ -2,6 +2,7 @@ pragma solidity ^0.5.0;
 
 import "./Interface.sol";
 import "./SpendExternal.sol";
+import "./TokenDetails.sol";
 import "../utils/SafeMath.sol";
 import "../utils/Context.sol";
 import "../utils/ConvertLib.sol";
@@ -237,10 +238,9 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
     function deposit(address contractAddress, uint256 amount) public returns (bool) {
-        string contractSymbol = TokenDetails(contractAddress).symbol();
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
-            uint256 marketRate = ConvertLib.convert(amount, contractSymbol, symbol());
+            uint256 marketRate = ConvertLib.convert(amount, contractAddress, address(this));
             uint256 fee = marketRate / 40;
             _mint(_msgSender(), marketRate - fee);
             return true;
@@ -249,7 +249,6 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
 
     /**
      * @dev Redeems Supertokens for any of the base tokens in the basket.
-     * The redeemed token must implement the ERC20-optional symbol() method.
      * The supertokens are burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
@@ -257,7 +256,7 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
-        uint amountRedeemed = ConvertLib.convert(amount, contractSymbol, symbol());
+        uint amountRedeemed = ConvertLib.convert(amount, contractAddress, address(this));
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
         increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
