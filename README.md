@@ -23,7 +23,7 @@ Requires Node.JS and Python.
 ```sh
 pip3 install pandas matplotlib
 npm i -g truffle
-npm i
+npm i @openzeppelin/contracts-ethereum-package @openzeppelin/upgrades
 ```
 
 ## Deploy contracts
