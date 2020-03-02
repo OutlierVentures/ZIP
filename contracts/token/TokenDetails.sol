@@ -8,11 +8,11 @@ import "./Interface.sol";
  */
 contract TokenDetails is Interface {
     address public owner;
+    uint256 public _minEthBalance;
     string private _name;
     string private _symbol;
     uint8 private _decimals;
-    uint256 private _minEthBalance;
-
+    
     /**
      * @dev Sets the values for `name`, `symbol`, and `decimals`. All three of
      * these values are immutable: they can only be set once during
