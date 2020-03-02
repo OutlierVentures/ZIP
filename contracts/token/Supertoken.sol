@@ -30,7 +30,7 @@ import "../utils/ConvertLib.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
+contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertLib {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
@@ -240,7 +240,7 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
     function deposit(address contractAddress, uint256 amount) public returns (bool) {
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
-            uint256 marketRate = ConvertLib.convert(amount, contractAddress, address(this));
+            uint256 marketRate = convert(amount, contractAddress, address(this));
             uint256 fee = marketRate / 40;
             _mint(_msgSender(), marketRate - fee);
             return true;
@@ -256,7 +256,7 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal {
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
-        uint amountRedeemed = ConvertLib.convert(amount, contractAddress, address(this));
+        uint256 amountRedeemed = convert(amount, contractAddress, address(this));
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
         increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
