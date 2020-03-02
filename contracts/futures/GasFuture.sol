@@ -4,7 +4,7 @@ import "../token/Interface.sol";
 import "../token/Supertoken.sol";
 import "../utils/ConvertLib.sol";
 
-contract GasFuture {
+contract GasFuture is ConvertLib {
 
     address payable public buyer;
     address payable public seller;
@@ -24,7 +24,7 @@ contract GasFuture {
         seller = seller_address;
         price = agreed_price_in_eth;
         length_days = contract_length_days;
-        numberOfTokens = convert(price, symbol, "CSTACK");
+        numberOfTokens = convert(price, address(0), address(this));
 	}
 
     // The buyer and seller accept the terms by calling this function.
