@@ -30,7 +30,7 @@ import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol"
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract Supertoken is Context, Interface, TokenDetails, SpendExternal, GSNRecipient {
+contract SupertokenGSN is Context, Interface, TokenDetails, SpendExternal, GSNRecipient {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
