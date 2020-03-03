@@ -30,7 +30,7 @@ import "../utils/ConvertLib.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertLib {
+contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertLib, OnlyOwner {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
@@ -94,15 +94,6 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertL
     function setMinEthBalance(uint256 amount) public onlyOwner {
         _minEthBalance = amount;
     }
-
-    /**
-     * @dev Modifier for functions callable only by the contract owner.
-     * Not eligible for relayed calls.
-     */
-    modifier onlyOwner() {
-		require(msg.sender == contractOwner, "Message sender must be contract owner");
-		_;
-	}
 
     /**
      * @dev See {Interface-totalSupply}.
