@@ -14,6 +14,11 @@ contract Mappings is OnlyOwner {
         return contractAddresses[symbol];
     }
 
+    function getMigrationAddress(string symbol) {
+        require(migrationAddresses[symbol].active, "Token not currently supported for migration.");
+        return migrationAddresses[symbol];
+    }
+
     function updateContractAddress(string symbol, address contractAddress) public {
         contractAddresses[symbol] = contractAddress;
     }
