@@ -12,4 +12,10 @@ contract Mappings is OnlyOwner {
     function updateContractAddress(string symbol, address contractAddress) public {
         contractAddresses[symbol] = contractAddress;
     }
+
+    function updateMigrationAddress(string symbol, address migrationAddress) public {
+        migrationAddresses[symbol] = migrationAddress;
+    }
+    
+
 }
