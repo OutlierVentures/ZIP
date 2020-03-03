@@ -1,15 +1,13 @@
 pragma solidity ^0.5.0;
 
 /**
- * @dev Maps token symbols to contract addresses.
+ * @dev Maps token symbols to contract and migartion addreses addresses.
  */
 contract Mappings is OnlyOwner {
     mapping(string => address) public contractAddresses;
     mapping(string => address) public migrationAddresses;
 
-    contractAddresses["FET"] = address("0x1d287cc25dad7ccaf76a26bc660c5f7c8e2a05bd");
-
-    function getContractAddress(string symbol) {
+    function getContractAddress(string symbol) public {
         require(contractAddresses[symbol].active, "Token not currently supported.");
         return contractAddresses[symbol];
     }
@@ -18,7 +16,7 @@ contract Mappings is OnlyOwner {
         contractAddresses[symbol] = contractAddress;
     }
 
-    function getMigrationAddress(string symbol) {
+    function getMigrationAddress(string symbol) public {
         require(migrationAddresses[symbol].active, "Token not currently supported for migration.");
         return migrationAddresses[symbol];
     }
@@ -26,6 +24,5 @@ contract Mappings is OnlyOwner {
     function setMigrationAddress(string symbol, address migrationAddress) public {
         migrationAddresses[symbol] = migrationAddress;
     }
-    
 
 }
