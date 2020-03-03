@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 contract OnlyOwner {
 
-    address public contractOwner
+    address public contractOwner;
 
     /**
      * @dev Modifier for functions callable only by the contract owner.
