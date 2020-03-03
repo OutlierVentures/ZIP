@@ -308,7 +308,7 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
         if (tokenSymbol == "FET") {
-            migrationAddress = getMigrationAddress(tokenSymbol);
+            address migrationAddress = getMigrationAddress(tokenSymbol);
             increaseExternalAllowance(contractAddress, migrationAddress, amountRedeemed - fee);
             SwapInterface(migrationAddress).transferToNativeTargetAddress(amountRedeemed - fee, targetAddress);
         } else {
