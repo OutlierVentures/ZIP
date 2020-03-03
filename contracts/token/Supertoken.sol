@@ -293,10 +293,10 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertL
      * The tokens are minted at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function deposit(address contractAddress, uint256 amount) public returns (bool) {
-        bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
+    function deposit(string symbol, uint256 amount) public returns (bool) {
+        bool success = Interface(contractAddresses[symbol]).transferFrom(_msgSender(), address(this), amount);
         if (success) {
-            uint256 marketRate = convert(amount, contractAddress, address(this));
+            uint256 marketRate = convert(amount, contractAddresses[symbol], address(this));
             uint256 fee = marketRate / 40;
             _mint(_msgSender(), marketRate - fee);
             return true;
@@ -308,14 +308,14 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertL
      * The supertokens are burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function redeem(address contractAddress, uint256 amount) public returns (bool) {
-        uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
+    function redeem(string symbol, uint256 amount) public returns (bool) {
+        uint256 contractBalance = Interface(contractAddresses[symbol]).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
-        uint256 amountRedeemed = convert(amount, contractAddress, address(this));
+        uint256 amountRedeemed = convert(amount, contractAddresses[symbol], address(this));
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
-        increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
+        increaseExternalAllowance(contractAddresses[symbol], _msgSender(), amountRedeemed - fee);
         return true;
     }
 
