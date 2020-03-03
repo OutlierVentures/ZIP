@@ -2,9 +2,10 @@ pragma solidity ^0.5.0;
 
 import "../token/Interface.sol";
 import "../token/Supertoken.sol";
+import "../token/Mappings.sol";
 import "../utils/ConvertLib.sol";
 
-contract GasFuture is ConvertLib {
+contract GasFuture is ConvertLib, Mappings {
 
     address payable public buyer;
     address payable public seller;
