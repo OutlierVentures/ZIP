@@ -10,7 +10,7 @@ contract Mappings is OnlyOwner {
     mapping(string => address) public migrationAddresses;
 
     function getContractAddress(string memory symbol) public {
-        require(contractAddresses[symbol].active, "Token not currently supported.");
+        require(contractAddresses[symbol] != address(0), "Token not currently supported.");
         return contractAddresses[symbol];
     }
 
@@ -19,7 +19,7 @@ contract Mappings is OnlyOwner {
     }
 
     function getMigrationAddress(string memory symbol) public {
-        require(migrationAddresses[symbol].active, "Token not currently supported for migration.");
+        require(migrationAddresses[symbol] != address(0), "Token not currently supported for migration.");
         return migrationAddresses[symbol];
     }
 
