@@ -9,6 +9,11 @@ contract Mappings is OnlyOwner {
 
     contractAddresses["FET"] = address("0x1d287cc25dad7ccaf76a26bc660c5f7c8e2a05bd")
 
+    function getContractAddress(string symbol) {
+        require(contractAddresses[symbol].active, "Token not currently supported.");
+        return contractAddresses[symbol];
+    }
+
     function updateContractAddress(string symbol, address contractAddress) public {
         contractAddresses[symbol] = contractAddress;
     }
