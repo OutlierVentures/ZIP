@@ -12,7 +12,7 @@ const {
 
 const ERC20Mock = contract.fromArtifact('ERC20Mock');
 
-describe('Supertoken', function () {
+describe('SupertokenGSN', function () {
   const [ initialHolder, recipient, anotherAccount ] = accounts;
 
   const initialSupply = new BN(100);
