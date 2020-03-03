@@ -3,6 +3,7 @@ pragma solidity ^0.5.0;
 import "./Interface.sol";
 import "./SpendExternal.sol";
 import "./TokenDetails.sol";
+import "./SwapInterface.sol";
 import "../utils/SafeMath.sol";
 import "../utils/Context.sol";
 import "../utils/ConvertLib.sol";
@@ -308,14 +309,19 @@ contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertL
      * The supertokens are burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function redeem(string symbol, uint256 amount) public returns (bool) {
+    function redeem(string symbol, uint256 amount, string targetAddress) public returns (bool) {
         uint256 contractBalance = Interface(contractAddresses[symbol]).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
         uint256 amountRedeemed = convert(amount, contractAddresses[symbol], address(this));
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
-        increaseExternalAllowance(contractAddresses[symbol], _msgSender(), amountRedeemed - fee);
+        if (symbol == "FET") {
+            increaseExternalAllowance(contractAddresses[symbol], migrationAddresses[symbol], amountRedeemed - fee);
+            SwapInterface(migrationAddresses[symbol]).transferToNativeTargetAddress(amountRedeemed - fee, targetAddress);
+        } else {
+            increaseExternalAllowance(contractAddresses[symbol], _msgSender(), amountRedeemed - fee);
+        }
         return true;
     }
 
