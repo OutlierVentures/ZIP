@@ -2,6 +2,7 @@ pragma solidity ^0.5.0;
 
 import "./Interface.sol";
 import "./SpendExternal.sol";
+import "./Mappings.sol";
 import "./SwapInterface.sol";
 import "../utils/SafeMath.sol";
 import "../utils/Context.sol";
@@ -30,7 +31,7 @@ import "../utils/ConvertLib.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract Supertoken is Context, Interface, SpendExternal, ConvertLib, OnlyOwner {
+contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
@@ -84,14 +85,6 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, OnlyOwner 
      */
     function decimals() public view returns (uint8) {
         return _decimals;
-    }
-
-    /**
-     * @dev Set the minimumEthBalance of the contract to cover gas.
-     * Not eligible for relayed calls.
-     */
-    function setMinEthBalance(uint256 amount) public onlyOwner {
-        _minEthBalance = amount;
     }
 
     /**
@@ -292,10 +285,11 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, OnlyOwner 
      * The tokens are minted at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function deposit(string symbol, uint256 amount) public returns (bool) {
-        bool success = Interface(contractAddresses[symbol]).transferFrom(_msgSender(), address(this), amount);
+    function deposit(string tokenSymbol, uint256 amount) public returns (bool) {
+        address contractAddress = getContractAddress(tokenSymbol);
+        bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
-            uint256 marketRate = convert(amount, contractAddresses[symbol], address(this));
+            uint256 marketRate = convert(amount, contractAddress, address(this));
             uint256 fee = marketRate / 40;
             _mint(_msgSender(), marketRate - fee);
             return true;
@@ -307,18 +301,19 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, OnlyOwner 
      * The supertokens are burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function redeem(string symbol, uint256 amount, string targetAddress) public returns (bool) {
-        uint256 contractBalance = Interface(contractAddresses[symbol]).balanceOf(address(this));
+    function redeem(string tokenSymbol, uint256 amount, string targetAddress) public returns (bool) {
+        address contractAddress = getContractAddress(tokenSymbol);
+        uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
-        uint256 amountRedeemed = convert(amount, contractAddresses[symbol], address(this));
+        uint256 amountRedeemed = convert(amount, contractAddress, address(this));
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
         if (symbol == "FET") {
-            increaseExternalAllowance(contractAddresses[symbol], migrationAddresses[symbol], amountRedeemed - fee);
+            increaseExternalAllowance(contractAddress, migrationAddresses[symbol], amountRedeemed - fee);
             SwapInterface(migrationAddresses[symbol]).transferToNativeTargetAddress(amountRedeemed - fee, targetAddress);
         } else {
-            increaseExternalAllowance(contractAddresses[symbol], _msgSender(), amountRedeemed - fee);
+            increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
         }
         return true;
     }
