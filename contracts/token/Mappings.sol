@@ -7,11 +7,15 @@ contract Mappings is OnlyOwner {
     mapping(string => address) public contractAddresses;
     mapping(string => address) public migrationAddresses;
 
-    contractAddresses["FET"] = address("0x1d287cc25dad7ccaf76a26bc660c5f7c8e2a05bd")
+    contractAddresses["FET"] = address("0x1d287cc25dad7ccaf76a26bc660c5f7c8e2a05bd");
 
     function getContractAddress(string symbol) {
         require(contractAddresses[symbol].active, "Token not currently supported.");
         return contractAddresses[symbol];
+    }
+
+    function setContractAddress(string symbol, address contractAddress) public {
+        contractAddresses[symbol] = contractAddress;
     }
 
     function getMigrationAddress(string symbol) {
@@ -19,11 +23,7 @@ contract Mappings is OnlyOwner {
         return migrationAddresses[symbol];
     }
 
-    function updateContractAddress(string symbol, address contractAddress) public {
-        contractAddresses[symbol] = contractAddress;
-    }
-
-    function updateMigrationAddress(string symbol, address migrationAddress) public {
+    function setMigrationAddress(string symbol, address migrationAddress) public {
         migrationAddresses[symbol] = migrationAddress;
     }
     
