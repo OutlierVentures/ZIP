@@ -2,7 +2,6 @@ pragma solidity ^0.5.0;
 
 import "./Interface.sol";
 import "./SpendExternal.sol";
-import "./TokenDetails.sol";
 import "./SwapInterface.sol";
 import "../utils/SafeMath.sol";
 import "../utils/Context.sol";
@@ -31,14 +30,13 @@ import "../utils/ConvertLib.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract Supertoken is Context, Interface, TokenDetails, SpendExternal, ConvertLib, OnlyOwner {
+contract Supertoken is Context, Interface, SpendExternal, ConvertLib, OnlyOwner {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
 
     mapping (address => mapping (address => uint256)) private _allowances;
 
-    
     address public contractOwner;
     uint256 public _minEthBalance;
     uint256 private _totalSupply;
