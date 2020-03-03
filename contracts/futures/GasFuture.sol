@@ -8,7 +8,7 @@ contract GasFuture is ConvertLib {
 
     address payable public buyer;
     address payable public seller;
-    address public basetokenAddress;
+    string public baseTokenSymbol;
     address public supertokenAddress;
     uint256 private price;
     uint256 private start_date;
@@ -63,8 +63,8 @@ contract GasFuture is ConvertLib {
      */
     function start() public payable {
         if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
-            Interface(basetokenAddress).transferFrom(seller, supertokenAddress, numberOfTokens);
-            Supertoken(supertokenAddress).deposit(basetokenAddress, numberOfTokens); // WARN account for Supertoken fees
+            Interface(getContractAddress(baseTokenSymbol)).transferFrom(seller, supertokenAddress, numberOfTokens);
+            Supertoken(supertokenAddress).deposit(baseTokenSymbol, numberOfTokens); // WARN account for Supertoken fees
         } else {
             selfdestruct(buyer);
         }
