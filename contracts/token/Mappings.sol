@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "../utils/OnlyOwner.sol"
+import "../utils/OnlyOwner.sol";
 
 /**
  * @dev Maps token symbols to contract and migartion addreses addresses.

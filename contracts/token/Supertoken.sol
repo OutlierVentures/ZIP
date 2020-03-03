@@ -38,8 +38,6 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
 
     mapping (address => mapping (address => uint256)) private _allowances;
 
-    address public contractOwner;
-    uint256 public _minEthBalance;
     uint256 private _totalSupply;
     string private _name;
     string private _symbol;
@@ -53,7 +51,7 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
         _name = name;
         _symbol = symbol;
         _decimals = decimals;
-        owner = msg.sender; // Set to contract deployer
+        contractOwner = msg.sender; // Set to contract deployer
     }
 
     /**
@@ -285,7 +283,7 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
      * The tokens are minted at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function deposit(string tokenSymbol, uint256 amount) public returns (bool) {
+    function deposit(string memory tokenSymbol, uint256 amount) public returns (bool) {
         address contractAddress = getContractAddress(tokenSymbol);
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
@@ -301,7 +299,7 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
      * The supertokens are burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function redeem(string tokenSymbol, uint256 amount, string targetAddress) public returns (bool) {
+    function redeem(string memory tokenSymbol, uint256 amount, string memory targetAddress) public returns (bool) {
         address contractAddress = getContractAddress(tokenSymbol);
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
