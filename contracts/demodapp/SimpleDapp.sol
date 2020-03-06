@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
-import "../contracts/token/Interface.sol";
-import "../contracts/utils/Context.sol";
+import "../token/Interface.sol";
+import "../utils/Context.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
 contract DemoDapp is GSNRecipient {
