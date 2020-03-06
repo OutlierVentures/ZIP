@@ -1,10 +1,10 @@
 pragma solidity ^0.5.0;
 /*
-import "./Supertoken";
+import "./FUEL";
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
-// @dev An extension of Supertoken for GSN.
-contract SupertokenGSN is Supertoken, GSNRecipient {
+// @dev An extension of FUEL for GSN.
+contract FUELGSN is FUEL, GSNRecipient {
 
     // GSN: accept relayed call.
 
