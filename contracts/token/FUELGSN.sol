@@ -3,6 +3,8 @@ pragma solidity ^0.5.0;
 import "./FUEL";
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
+// DEV NOTE: OpenZeppelin GSN Contracts already define Context, so no need to inherit the local Context contract.
+
 // @dev An extension of FUEL for GSN.
 contract FUELGSN is FUEL, GSNRecipient {
 
