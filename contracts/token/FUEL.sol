@@ -10,7 +10,7 @@ import "../utils/ConvertLib.sol";
 
 /**
  * @dev Implementation of the token interface. This is the OpenZeppelin ERC20
- * with added functionality for depositing ERC20 tokens in exchange for Supertokens.
+ * with added functionality for depositing ERC20 tokens in exchange for FUEL.
  *
  * This implementation is agnostic to the way tokens are created. This means
  * that a supply mechanism has to be added in a derived contract using {_mint}.
@@ -31,7 +31,7 @@ import "../utils/ConvertLib.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
+contract FUEL is Context, Interface, SpendExternal, ConvertLib, Mappings {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
@@ -278,7 +278,7 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
     }
 
     /**
-     * @dev Deposits an ERC20 and mints Supertokens at the conversion rate.
+     * @dev Deposits an ERC20 and mints FUEL at the conversion rate.
      * Deposited tokens must implement the ERC20-optional symbol() method.
      * The tokens are minted at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
@@ -295,15 +295,15 @@ contract Supertoken is Context, Interface, SpendExternal, ConvertLib, Mappings {
     }
 
     /**
-     * @dev Redeems Supertokens for any of the base tokens in the basket.
-     * The supertokens are burned at the sender's address. Oracle data is
+     * @dev Redeems FUEL for any of the base tokens in the basket.
+     * The FUEL are burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
     function redeem(string memory tokenSymbol, uint256 amount, string memory targetAddress) public returns (bool) {
         address contractAddress = getContractAddress(tokenSymbol);
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
-        require(address(this).balance >= _minEthBalance, "Supertoken contract has insufficient ETH");
+        require(address(this).balance >= _minEthBalance, "FUEL contract has insufficient ETH");
         uint256 amountRedeemed = convert(amount, contractAddress, address(this));
         uint256 fee = amountRedeemed / 40;
         _burn(_msgSender(), amount);
