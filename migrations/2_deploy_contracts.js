@@ -1,6 +1,6 @@
 const ConvertLib = artifacts.require("ConvertLib");
-const Supertoken = artifacts.require("Supertoken");
+const FUEL = artifacts.require("FUEL");
 
 module.exports = function(deployer) {
-  deployer.deploy(Supertoken, "Supertoken", "FUEL", 18);
+  deployer.deploy(FUEL, "FUEL", "FUEL", 18);
 };
