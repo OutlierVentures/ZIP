@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 /**
- * @dev Interface of the ERC20 standard plus FUEL deposits.
+ * @dev Interface of the ERC20 standard.
  */
 interface Interface {
     /**
