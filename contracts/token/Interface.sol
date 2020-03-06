@@ -60,6 +60,22 @@ interface Interface {
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
     /**
+     * @dev Deposit `amount` of `tokenSymbol` into the contract, minting
+     * FUEL at the depositors address.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     */
+    function deposit(string memory tokenSymbol, uint256 amount) public returns (bool);
+
+    /**
+     * @dev Redeem `amount` of FUEL for `tokenSymbol`, sent to `targetAddress`,
+     * which may be on any of the supported chains.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     */
+    function redeem(string memory tokenSymbol, uint256 amount, string memory targetAddress) public returns (bool);
+
+    /**
      * @dev Emitted when `value` tokens are moved from one account (`from`) to
      * another (`to`).
      *
