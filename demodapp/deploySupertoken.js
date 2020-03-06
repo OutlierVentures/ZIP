@@ -20,9 +20,9 @@ eth.accounts().then(function(accounts){
     var tokenInstance = null;
 
     var initialAmount = 100000000;
-    var tokenName = 'Supertoken';
+    var tokenName = 'FUEL';
     var decimalUnits = 1000;
-    var tokenSymbol = 'SPR';
+    var tokenSymbol = 'FUEL';
 
     function updateBalanceHTML() {
         if(!tokenInstance) { return; }
