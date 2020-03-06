@@ -10,7 +10,7 @@ contract DemoDapp is GSNRecipient {
      * @dev Example dapp function: spend a base token from the basket.
      */
     function spendBaseToken() external returns (bool) {
-        private fuel = Interface("0xSUPERTOKENADDRESS") // Specify Supertoken address
+        private fuel = Interface("0xFUELADDRESS") // Specify FUEL address
         fuel.transfer(address(this), 100) // Send 100 fuel to dapp
         // Send 100 FUEL worth of FET to this dapp's Etch contract
         fuel.redeem("FET", 100, "0xTHISDAPPCONTRACTFETCHADDRESS")
