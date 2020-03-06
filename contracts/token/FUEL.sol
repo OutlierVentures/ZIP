@@ -296,7 +296,7 @@ contract FUEL is Context, Interface, SpendExternal, ConvertLib, Mappings {
 
     /**
      * @dev Redeems FUEL for any of the base tokens in the basket.
-     * The FUEL are burned at the sender's address. Oracle data is
+     * FUEL is burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
     function redeem(string memory tokenSymbol, uint256 amount, string memory targetAddress) public returns (bool) {

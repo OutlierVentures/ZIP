@@ -73,7 +73,7 @@ contract GasFuture is ConvertLib, Mappings {
 
     /**
      * Settle the contract after its expiry. Successful settlement transfers this contract's FUEL to the buyer
-     * and the escrow balance to the seller. The buyer can use the FUEL to pay for gas with FUEL.redeem().
+     * and the escrow balance to the seller. The buyer can use FUEL to pay for gas with FUEL.redeem().
      */
     function settle() public payable {
         require(block.timestamp > start_date + length_days * 1 days, "Contract not yet expired");
