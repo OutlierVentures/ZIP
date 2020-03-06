@@ -4,16 +4,16 @@ import "../contracts/token/Interface.sol";
 import "../contracts/utils/Context.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
-contract SimpleDapp is GSNRecipient {
+contract DemoDapp is GSNRecipient {
 
     /**
      * @dev Example dapp function: spend a base token from the basket.
      */
     function spendBaseToken() external returns (bool) {
-        private st = Interface("0xSUPERTOKENADDRESS") // Specify Supertoken address
-        st.transfer(address(this), 100) // Send 100 fuel to dapp
+        private fuel = Interface("0xSUPERTOKENADDRESS") // Specify Supertoken address
+        fuel.transfer(address(this), 100) // Send 100 fuel to dapp
         // Send 100 FUEL worth of FET to this dapp's Etch contract
-        st.redeem("FET", 100, "0xTHISDAPPCONTRACTFETCHADDRESS")
+        fuel.redeem("FET", 100, "0xTHISDAPPCONTRACTFETCHADDRESS")
         return true;
     }
 
