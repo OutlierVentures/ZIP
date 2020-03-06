@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 import "../token/Interface.sol";
-import "../token/Supertoken.sol";
+import "../token/FUEL.sol";
 import "../token/Mappings.sol";
 import "../utils/ConvertLib.sol";
 
@@ -10,7 +10,7 @@ contract GasFuture is ConvertLib, Mappings {
     address payable public buyer;
     address payable public seller;
     string public baseTokenSymbol;
-    address public supertokenAddress;
+    address public fuelAddress;
     uint256 private price;
     uint256 private start_date;
     uint256 private length_days;
@@ -60,24 +60,24 @@ contract GasFuture is ConvertLib, Mappings {
     /**
      * Start the contract within a day of initializing, assuming the full price is paid down, otherwise return funds.
      * Successful start transfers the base tokens to this contract's address. The contract deposits these in exchange
-     * for Supertokens, which grants an allowance from the basket with Supertoken.redeem().
+     * for FUEL, which grants an allowance from the basket with FUEL.redeem().
      */
     function start() public payable {
         if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
-            Interface(getContractAddress(baseTokenSymbol)).transferFrom(seller, supertokenAddress, numberOfTokens);
-            Supertoken(supertokenAddress).deposit(baseTokenSymbol, numberOfTokens); // WARN account for Supertoken fees
+            Interface(getContractAddress(baseTokenSymbol)).transferFrom(seller, fuelAddress, numberOfTokens);
+            FUEL(fuelAddress).deposit(baseTokenSymbol, numberOfTokens); // WARN account for FUEL fees
         } else {
             selfdestruct(buyer);
         }
     }
 
     /**
-     * Settle the contract after its expiry. Successful settlement transfers this contract's Supertokens to the buyer
-     * and the escrow balance to the seller. The buyer can use the Supertokens to pay for gas with Supertoken.redeem().
+     * Settle the contract after its expiry. Successful settlement transfers this contract's FUEL to the buyer
+     * and the escrow balance to the seller. The buyer can use the FUEL to pay for gas with FUEL.redeem().
      */
     function settle() public payable {
         require(block.timestamp > start_date + length_days * 1 days, "Contract not yet expired");
-        Interface(supertokenAddress).transfer(buyer, numberOfTokens);
+        Interface(fuelAddress).transfer(buyer, numberOfTokens);
         seller.transfer(price);
         escrow_balance -= price;
     }
