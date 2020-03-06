@@ -5,9 +5,9 @@ const { expect } = require('chai');
 
 const TokenDetailsMock = contract.fromArtifact('TokenDetailsMock');
 
-describe('Supertoken', function () {
-  const _name = 'Supertoken';
-  const _symbol = 'SPR';
+describe('FUEL', function () {
+  const _name = 'FUEL';
+  const _symbol = 'FUEL';
   const _decimals = new BN(18);
 
   beforeEach(async function () {
