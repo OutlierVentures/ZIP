@@ -5,8 +5,8 @@ import "./SpendExternal.sol";
 import "./Mappings.sol";
 import "./SwapInterface.sol";
 import "../utils/SafeMath.sol";
-import "../utils/Context.sol";
 import "../utils/ConvertLib.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
 /**
  * @dev Implementation of the token interface. This is the OpenZeppelin ERC20
@@ -31,7 +31,7 @@ import "../utils/ConvertLib.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract FUEL is Context, Interface, SpendExternal, ConvertLib, Mappings {
+contract FUEL is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNRecipient {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
@@ -316,6 +316,35 @@ contract FUEL is Context, Interface, SpendExternal, ConvertLib, Mappings {
             increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
         }
         return true;
+    }
+
+    /**
+     * @dev GSN: accept relayed call.
+     */
+    function acceptRelayedCall(
+        address relay,
+        address from,
+        bytes calldata encodedFunction,
+        uint256 transactionFee,
+        uint256 gasPrice,
+        uint256 gasLimit,
+        uint256 nonce,
+        bytes calldata approvalData,
+        uint256 maxPossibleCharge
+    ) external view returns (uint256, bytes memory) {
+        return _approveRelayedCall();
+    }
+
+    /**
+     * @dev GSN: preprocessing for relayed calls.
+     */
+    function _preRelayedCall(bytes memory context) internal returns (bytes32) {
+    }
+
+    /**
+     * @dev GSN: postprocessing for relayed calls.
+     */
+    function _postRelayedCall(bytes memory context, bool, uint256 actualCharge, bytes32) internal {
     }
 
 }
