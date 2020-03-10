@@ -1,8 +1,8 @@
 pragma solidity ^0.5.0;
 
 import "./Interface.sol";
-import "../utils/Context.sol";
 import "../utils/SafeMath.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
 contract SpendExternal is Context {
     using SafeMath for uint256;
