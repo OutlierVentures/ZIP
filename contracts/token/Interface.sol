@@ -65,7 +65,7 @@ interface Interface {
      *
      * Returns a boolean value indicating whether the operation succeeded.
      */
-    function deposit(string memory tokenSymbol, uint256 amount) public returns (bool);
+    function deposit(string calldata tokenSymbol, uint256 amount) external returns (bool);
 
     /**
      * @dev Redeem `amount` of FUEL for `tokenSymbol`, sent to `targetAddress`,
@@ -73,7 +73,7 @@ interface Interface {
      *
      * Returns a boolean value indicating whether the operation succeeded.
      */
-    function redeem(string memory tokenSymbol, uint256 amount, string memory targetAddress) public returns (bool);
+    function redeem(string calldata tokenSymbol, uint256 amount, string memory targetAddress) external returns (bool);
 
     /**
      * @dev Emitted when `value` tokens are moved from one account (`from`) to
