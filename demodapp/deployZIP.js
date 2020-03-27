@@ -20,9 +20,9 @@ eth.accounts().then(function(accounts){
     var tokenInstance = null;
 
     var initialAmount = 100000000;
-    var tokenName = 'FUEL';
+    var tokenName = 'ZIP';
     var decimalUnits = 1000;
-    var tokenSymbol = 'FUEL';
+    var tokenSymbol = 'ZIP';
 
     function updateBalanceHTML() {
         if(!tokenInstance) { return; }
