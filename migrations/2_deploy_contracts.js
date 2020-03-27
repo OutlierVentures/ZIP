@@ -1,6 +1,6 @@
 const ConvertLib = artifacts.require("ConvertLib");
-const FUEL = artifacts.require("FUEL");
+const ZIP = artifacts.require("ZIP");
 
 module.exports = function(deployer) {
-  deployer.deploy(FUEL, "FUEL", "FUEL", 18);
+  deployer.deploy(ZIP, "ZIP", "ZIP", 18);
 };
