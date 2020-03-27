@@ -70,9 +70,9 @@ class SetPrice:
             tops.append(top)
         forecasted_means = self.repeat_list_item(forecasted_means, period)[:-period] # What we cut off is next quarter"s pricing
         forecasted_tops = self.repeat_list_item(forecasted_tops, period)[:-period]
-        forecasted_means_tops = pd.DataFrame({"FUEL pricing": forecasted_means}, index = operation_price_usd.index)
+        forecasted_means_tops = pd.DataFrame({"ZIP pricing": forecasted_means}, index = operation_price_usd.index)
 
-        pricing = forecasted_means_tops.rename(columns = {"FUEL pricing": "Value"})
+        pricing = forecasted_means_tops.rename(columns = {"ZIP pricing": "Value"})
         margin = pricing - operation_price_usd
         margin = margin[180:]
         num_used_ops = gas_used[-len(margin):] / self.operation_gas_cost
