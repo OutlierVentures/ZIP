@@ -88,12 +88,12 @@ Consumers interact (doubly) indirectly with the CStack through enterprises. Valu
 ## Futures market value map
 
 1. A speculator would lock up tokens in a smart contract, given a specified gas limit and price*.
-2. The speculator can create new stable crypto commodities (SCC) known as FUEL as liabilities against their collateral up to a threshold.
-3. FUEL (representing prepaid network gas*) is sold to developers for fiat - *leveraging the speculator’s position with fiat*. Tokens are not locked up until FUEL is bought.
-4. The FUEL price target is provided by an oracle*, with the target maintained by a dynamic FUEL supply.
-    1. FUEL is pegged to certain amount of compute (eg. X FLOPS).
-    2. If price is above target, speculators have an incentive to create new FUEL and sell at a ‘premium’ price.
-    3. If price is below target, speculators have incentive to repurchase FUEL (reduce supply) to decrease their leverage at a discount.
+2. The speculator can create new stable crypto commodities (SCC) known as Z!P as liabilities against their collateral up to a threshold.
+3. Z!P (representing prepaid network gas*) is sold to developers for fiat - *leveraging the speculator’s position with fiat*. Tokens are not locked up until Z!P is bought.
+4. The Z!P price target is provided by an oracle*, with the target maintained by a dynamic Z!P supply.
+    1. Z!P is pegged to certain amount of compute (eg. X FLOPS).
+    2. If price is above target, speculators have an incentive to create new Z!P and sell at a ‘premium’ price.
+    3. If price is below target, speculators have incentive to repurchase Z!P (reduce supply) to decrease their leverage at a discount.
 
 ## Infrastructure mapping
 

@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./docs/logo.png" width="500" />
+    <img src="./docs/zip-header.png" />
     <br><br>
     <a href="#" alt="Cross-chain">
         <img src="./docs/xchain.svg" />
@@ -33,6 +33,17 @@ truffle compile
 truffle migrate
 ```
 
+## Using Z!P
+
+If you've got Zip in your wallet, just bring up the Zip interface and call redeem with your chosen chain and your dapp's address on that chain. For example, to use 100 units on Fetch.AI:
+
+```js
+Interface zip = Interface("0xZIPCONTRACTADDRESS");
+zip.redeem("FET", 100, "0xYOURCONTRACTFETCHADDRESS");
+```
+
+Note that Z!P is not yet a live token, and you'll need to deploy it. The code has been written for you, including a UI: see Demo Dapp below.
+
 ## Problem statement
 
 To lower the barriers of adoption for creating and operating applications using multiple blockchain networks.  
@@ -43,7 +54,7 @@ Barriers to adoption and UX issues, in order of importance:
 2. Ledger cost volatility (gas costs).
 3. Utility price volatility.
 
-## Intended solution
+## The Z!P solution
 
 1. A meta-token redeemed for the relevant underlying token through smart contracts and the time of executing ledger operations.
 2. A smart contract-based gas futures market to stabilise the cost of fees.
@@ -55,25 +66,32 @@ Barriers to adoption and UX issues, in order of importance:
 
 Note that token and gas price are not inherently correlated, only network congestion (which raises gas costs) tends to occur at the same time as token price increases due to increased trading volume. Stabilising gas costs will not stabilise token costs and vice versa.
 
-## FUEL functionality
+## Z!P functionality
 
-FUEL is an ERC20-compliant token based largely on the OpenZeppelin reference for Solidity 0.5. It is a mint/burn model backed by a collateral pool of tokens.
+Z!P is an ERC20-compliant token based largely on the OpenZeppelin reference for Solidity 0.5. It is a mint/burn model backed by a collateral pool of tokens.
 
-FUEL's collateral pool is a basket of tokens which may be used to pay for network fees, as well as ETH to cover gas. At any time, anyone may spend FUEL as if it were their chosen underlying token (specified by that token's symbol) through a token allowance model. The deposited FUEL is converted to the underlying tokens according to their market value in ETH. This price feed is achieved using an oracle. Similarly, underlying tokens may be deposited in the contract, minting FUEL at the market rate for the depositor. Minimum token balances are required for mint/burn calls, and setting these minimum balances is only available to the contract owner (the value may be voted on using off-chain governance).
+Z!P's collateral pool is a basket of tokens which may be used to pay for network fees, as well as ETH to cover gas. At any time, anyone may spend Z!P as if it were their chosen underlying token (specified by that token's symbol) through a token allowance model. The deposited Z!P is converted to the underlying tokens according to their market value in ETH. This price feed is achieved using an oracle. Similarly, underlying tokens may be deposited in the contract, minting Z!P at the market rate for the depositor. Minimum token balances are required for mint/burn calls, and setting these minimum balances is only available to the contract owner (the value may be voted on using off-chain governance).
 
 <p align="center">
     <img src="./docs/depositwithdraw.png" width="800" />
 </p>
 
-Cross-chain redemption is achieved through migration contracts, with the user (developer) simply specifying their dapp's address on the non-Ethereum networks in a Solidity function call. FUEL is also Gas Stations Network-compatible, meaning only FUEL token is needed by developers, not ETH and FUEL as would typically be the case.
+Cross-chain redemption is achieved through migration contracts, with the user (developer) simply specifying their dapp's address on the non-Ethereum networks in a Solidity function call. Z!P is also Gas Stations Network-compatible, meaning only Z!P token is needed by developers, not ETH and Z!P as would typically be the case.
 
-FUEL thereby becomes an ERC20 token which may be used across blockchain networks.
+Z!P thereby becomes an ERC20 token which may be used across blockchain networks.
 
 The stable pricing model applies a flat price updated quarterly (in development, see the `peg` folder). Deposits and withdrawals currently implement a 2.5% fee to cover gas costs and external token costs as an interim solution.
 
 <p align="center">
     <img src="./docs/pricing.png" width="500" />
 </p>
+
+## Demo Dapp
+
+There is a demo dapp in the demo folder. By default, this uses test RPC (node needs to be running); to use it on test/mainnet, deploy the dapp contract and Z!P contract to your net of choice. The demo dapp has two components:
+
+1. `deployZIP`: Move Z!P around addresses. Send some to your wallet for use in the dapp.
+2. `demoDapp`: A dapp with a button that when pressed, transfers 100 Z!P to the dapp (normal metamask signing), and the dapp then spends it on FET.
 
 ## A note on using futures to stabilise gas
 
@@ -90,9 +108,9 @@ The former is tried and tested, but relies on the ability to exploit refund mech
 
 Ultimately, a price peg (updated quarterly) as discussed above is a more viable solution.
 
-## The benefits: without FUEL vs with FUEL
+## The benefits: without Z!P vs with Z!P
 
-### Without FUEL
+### Without Z!P
 
 1. User wants to use network X.
 2. User goes to an exchange and purchases token X.
@@ -110,19 +128,12 @@ Ultimately, a price peg (updated quarterly) as discussed above is a more viable 
 
 In other words, the user needs to purchase a separate token and transfer it to their wallet every time they want to use a given network. They have to know the correct token to buy and where to buy it (which often differs depending on network). They also rack up significant gas fees and time cost.
 
-### With FUEL
+### With Z!P
 
-1. User purchases FUEL.
-2. User uses FUEL on any of the underlying networks like a prepaid card.
+1. User purchases Z!P.
+2. User uses Z!P on any of the underlying networks like a prepaid card.
 
 A further benefit of the CStack token is that it may be purchased both as normal on an exchange, but may also be acquired by depositing any of the underlying tokens in exchange for the CStack token - no exchanges needed.
-
-## Demo Dapp
-
-There is a demo dapp in the demo folder. By default, this uses test RPC (node needs to be running); to use it on test/mainnet, deploy the dapp contract and FUEL contract to your net of choice. The demo dapp has two components:
-
-1. `deployFUEL`: Move FUEL around addresses. Send some to your wallet for use in the dapp.
-2. `demoDapp`: A dapp with a button that when pressed, transfers 100 FUEL to the dapp (normal metamask signing), and the dapp then spends it on FET.
 
 ## Roadmap: next up
 
