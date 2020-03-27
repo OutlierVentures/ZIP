@@ -12,7 +12,7 @@ const {
 
 const ERC20Mock = contract.fromArtifact('ERC20Mock');
 
-describe('FUELGSN', function () {
+describe('ZIPGSN', function () {
   const [ initialHolder, recipient, anotherAccount ] = accounts;
 
   const initialSupply = new BN(100);
@@ -21,7 +21,7 @@ describe('FUELGSN', function () {
     this.token = await ERC20Mock.new(initialHolder, initialSupply);
   });
 
-  shouldBehaveLikeERC20('FUEL', initialSupply, initialHolder, recipient, anotherAccount);
+  shouldBehaveLikeERC20('ZIP', initialSupply, initialHolder, recipient, anotherAccount);
 
   describe('decrease allowance', function () {
     describe('when the spender is not the zero address', function () {
@@ -337,7 +337,7 @@ describe('FUELGSN', function () {
   });
 
   describe('_transfer', function () {
-    shouldBehaveLikeERC20Transfer('FUEL', initialHolder, recipient, initialSupply, function (from, to, amount) {
+    shouldBehaveLikeERC20Transfer('ZIP', initialHolder, recipient, initialSupply, function (from, to, amount) {
       return this.token.transferInternal(from, to, amount);
     });
 
@@ -351,7 +351,7 @@ describe('FUELGSN', function () {
   });
 
   describe('_approve', function () {
-    shouldBehaveLikeERC20Approve('FUEL', initialHolder, recipient, initialSupply, function (owner, spender, amount) {
+    shouldBehaveLikeERC20Approve('ZIP', initialHolder, recipient, initialSupply, function (owner, spender, amount) {
       return this.token.approveInternal(owner, spender, amount);
     });
 
