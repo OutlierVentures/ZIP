@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 /**
- * @dev Interface of the ERC20 standard plus FUEL's deposit and redeem.
+ * @dev Interface of the ERC20 standard plus ZIP's deposit and redeem.
  */
 interface Interface {
     /**
@@ -61,14 +61,14 @@ interface Interface {
 
     /**
      * @dev Deposit `amount` of `tokenSymbol` into the contract, minting
-     * FUEL at the depositors address.
+     * ZIP at the depositors address.
      *
      * Returns a boolean value indicating whether the operation succeeded.
      */
     function deposit(string calldata tokenSymbol, uint256 amount) external returns (bool);
 
     /**
-     * @dev Redeem `amount` of FUEL for `tokenSymbol`, sent to `targetAddress`,
+     * @dev Redeem `amount` of ZIP for `tokenSymbol`, sent to `targetAddress`,
      * which may be on any of the supported chains.
      *
      * Returns a boolean value indicating whether the operation succeeded.

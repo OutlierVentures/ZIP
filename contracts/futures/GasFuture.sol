@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 import "../token/Interface.sol";
-import "../token/FUEL.sol";
+import "../token/ZIP.sol";
 import "../token/Mappings.sol";
 import "../utils/ConvertLib.sol";
 
@@ -10,7 +10,7 @@ contract GasFuture is ConvertLib, Mappings {
     address payable public buyer;
     address payable public seller;
     string public baseTokenSymbol;
-    address public fuelAddress;
+    address public zipAddress;
     uint256 private price;
     uint256 private start_date;
     uint256 private length_days;
@@ -60,24 +60,24 @@ contract GasFuture is ConvertLib, Mappings {
     /**
      * Start the contract within a day of initializing, assuming the full price is paid down, otherwise return funds.
      * Successful start transfers the base tokens to this contract's address. The contract deposits these in exchange
-     * for FUEL, which grants an allowance from the basket with FUEL.redeem().
+     * for ZIP, which grants an allowance from the basket with ZIP.redeem().
      */
     function start() public payable {
         if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
-            Interface(getContractAddress(baseTokenSymbol)).transferFrom(seller, fuelAddress, numberOfTokens);
-            FUEL(fuelAddress).deposit(baseTokenSymbol, numberOfTokens); // WARN account for FUEL fees
+            Interface(getContractAddress(baseTokenSymbol)).transferFrom(seller, zipAddress, numberOfTokens);
+            ZIP(zipAddress).deposit(baseTokenSymbol, numberOfTokens); // WARN account for ZIP fees
         } else {
             selfdestruct(buyer);
         }
     }
 
     /**
-     * Settle the contract after its expiry. Successful settlement transfers this contract's FUEL to the buyer
-     * and the escrow balance to the seller. The buyer can use FUEL to pay for gas with FUEL.redeem().
+     * Settle the contract after its expiry. Successful settlement transfers this contract's ZIP to the buyer
+     * and the escrow balance to the seller. The buyer can use ZIP to pay for gas with ZIP.redeem().
      */
     function settle() public payable {
         require(block.timestamp > start_date + length_days * 1 days, "Contract not yet expired");
-        Interface(fuelAddress).transfer(buyer, numberOfTokens);
+        Interface(zipAddress).transfer(buyer, numberOfTokens);
         seller.transfer(price);
         escrow_balance -= price;
     }
