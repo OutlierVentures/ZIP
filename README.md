@@ -57,8 +57,7 @@ Barriers to adoption and UX issues, in order of importance:
 ## The Z!P solution
 
 1. A meta-token redeemed for the relevant underlying token through smart contracts and the time of executing ledger operations.
-2. A smart contract-based gas futures market to stabilise the cost of fees.
-3. A fiat gateway/abstraction layer hiding the token cost, which ultimately should not be stabilised for the sake of investability.
+2. A stable pricing model according to usage rather than the USD.
 
 <p align="center">
     <img src="./docs/overview.png" width="400" />
@@ -76,9 +75,43 @@ Z!P's collateral pool is a basket of tokens which may be used to pay for network
     <img src="./docs/depositwithdraw.png" width="800" />
 </p>
 
-Cross-chain redemption is achieved through migration contracts, with the user (developer) simply specifying their dapp's address on the non-Ethereum networks in a Solidity function call. Z!P is also Gas Stations Network-compatible, meaning only Z!P token is needed by developers, not ETH and Z!P as would typically be the case.
+### Cross-chain redemption
+
+The user simply specifies their dapp's address on the non-Ethereum networks in a Solidity function call, and the back-end handles the ledger payment:
+
+```js
+zip.redeem("FET", 100, "0xYOURCONTRACTFETCHADDRESS");
+```
+
+Cross-chain redemption is achieved via _migration contracts_. This is a set of smart contracts which lock an asset on one chain, and release a second asset on another. The locking contract emits an _event_ to be picked up by an open-source off-chain listener, which submits the release transaction on the other chain. Use of migration contracts has two key benefits. First, several major chains have live migrations, allowing ZIP to utilise existing infrastructure. Second, support for chains can be built while the ZIP token is live: on-chain logic may be set in stone (consisting of a function call specifying a locking contract address and the amount to redeem). The locking contract and external-chain redemption contract can be developed and deployed at any time, without the need to change the already deployed ZIP code.
+
+Z!P is also Gas Stations Network-compatible, meaning only Z!P token is needed by developers, not ETH and Z!P as would typically be the case.
 
 Z!P thereby becomes an ERC20 token which may be used across blockchain networks.
+
+#### Reducing latency
+
+Latency is to be reduced as per [Issue 1](https://github.com/OutlierVentures/ZIP/issues/1).
+
+One problem with Z!P's current implementation is increased latency versus native function calls. Right now, `redeem()` grants an allowance to the migration contract, which emits the relevant _event_ only once it has seen the allowance. The off-chain listener then submits the function call on the non-Ethereum chain.
+
+This latency could be significantly reduced by emitting the event at `redeem()` call time, and locking the tokens in this function call.
+
+The problem with this approach is that existing migration contracts will still need to be supported (i.e. the current implementation), and Z!P contract logic cannot be changed once deployed.
+
+The solution: a `mapping(string => address) public highspeedMigrations` (e.g. `TOK,0xTOKCONTRACTADDRESS`) with a get/set that writes newly implemented migrations to the contract state, that can the be checked for membership. Then (pseudocode):
+```js
+if (highspeedMigrations(chosenChain) != address(0)) {
+    Interface(highspeedMigrations(chosenChain)).transfer(`0xESCROWADDRESS`, AMOUNT) // Send on to brun address once tx confirmed on other chain
+    emit Redemption(redeemer, chain, amount);
+} else {
+    // Transfer/allowance to existing migration contract as normal
+}
+```
+
+A refund mechanism for escrowed funds will also need to be implemented for failed or stuck redemptions, should these occur.
+
+### Stable pricing
 
 The stable pricing model applies a flat price updated quarterly (in development, see the `peg` folder). Deposits and withdrawals currently implement a 2.5% fee to cover gas costs and external token costs as an interim solution.
 
@@ -86,14 +119,14 @@ The stable pricing model applies a flat price updated quarterly (in development,
     <img src="./docs/pricing.png" width="500" />
 </p>
 
-## Demo Dapp
+### Demo Dapp
 
 There is a demo dapp in the demo folder. By default, this uses test RPC (node needs to be running); to use it on test/mainnet, deploy the dapp contract and Z!P contract to your net of choice. The demo dapp has two components:
 
 1. `deployZIP`: Move Z!P around addresses. Send some to your wallet for use in the dapp.
 2. `demoDapp`: A dapp with a button that when pressed, transfers 100 Z!P to the dapp (normal metamask signing), and the dapp then spends it on FET.
 
-## A note on using futures to stabilise gas
+### A note on using futures to stabilise gas
 
 A futures market can be used as an alternate stabilisation mechanism. See `contracts/futures` for exploratory work. There are two options for stabilising gas using a futures market:
 
@@ -137,5 +170,5 @@ A further benefit of the CStack token is that it may be purchased both as normal
 
 ## Roadmap: next up
 
-1. GSN tests (see [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/test/GSN)).
-2. Token migration contract / wrapped assets.
+1. [Reduced latency in cross-chain redemption](https://github.com/OutlierVentures/ZIP/issues/1).
+2. GSN tests (see [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/test/GSN)).
