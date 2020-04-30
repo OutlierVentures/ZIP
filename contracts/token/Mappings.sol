@@ -9,16 +9,21 @@ import "../utils/OnlyOwner.sol";
  * If both a contract address and a migration address, uses an external swap.
  */
 contract Mappings is OnlyOwner {
+    
     struct Details {
-        bool isERC20;
-        address contractAddress;
-        address migrationAddress;
+        bool _isERC20;
+        address _contractAddress;
+        address _migrationAddress;
     }
     mapping(string => Details) public swapDetails;
 
     function getDetails(string memory symbol) public view returns (bool, address, address) {
-        require(swapDetails[symbol].contractAddress != address(0), "Token not currently supported.");
-        return (swapDetails[symbol].isERC20, swapDetails[symbol].contractAddress, swapDetails[symbol].migrationAddress);
+        require(swapDetails[symbol]._contractAddress != address(0), "Token not currently supported.");
+        return (swapDetails[symbol]._isERC20, swapDetails[symbol]._contractAddress, swapDetails[symbol]._migrationAddress);
+    }
+
+    function setDetails(string memory symbol, bool isERC20, address contractAddress, address migrationAddress) public {
+        swapDetails.push(Details(isERC20, contractAddress, migrationAddress));
     }
 
 }
