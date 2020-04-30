@@ -300,21 +300,29 @@ contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNReci
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
     function redeem(string memory tokenSymbol, uint256 amount, string memory targetAddress) public returns (bool) {
-        address contractAddress = getContractAddress(tokenSymbol);
+        // GetDetails will throw error if token not supported
+        (bool isERC20, address contractAddress, address migrationAddress) = getDetails(tokenSymbol);
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "ZIP contract has insufficient ETH");
         uint256 amountRedeemed = convert(amount, contractAddress, address(this));
         uint256 fee = amountRedeemed / 40;
+        // Burn ZIP
         _burn(_msgSender(), amount);
         // Can't compare string memory and string literal, so compare hashes
-        if (keccak256(abi.encodePacked(tokenSymbol)) == keccak256("FET")) {
-            address migrationAddress = getMigrationAddress(tokenSymbol);
-            increaseExternalAllowance(contractAddress, migrationAddress, amountRedeemed - fee);
-            SwapInterface(migrationAddress).transferToNativeTargetAddress(amountRedeemed - fee, targetAddress);
-        } else {
+        
+        if (isERC20) {
             increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
         }
+        // Non-native, use external swap
+        else if (migrationAddress != address(0)) {
+            increaseExternalAllowance(contractAddress, migrationAddress, amountRedeemed - fee);
+            SwapInterface(migrationAddress).transferToNativeTargetAddress(amountRedeemed - fee, targetAddress);
+        }
+        // Native, burn wrapped token and emit event now.
+        //else {
+            // Todo
+        //}
         return true;
     }
 
