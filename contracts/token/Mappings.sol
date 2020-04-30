@@ -9,7 +9,7 @@ import "../utils/OnlyOwner.sol";
  * If both a contract address and a migration address, uses an external swap.
  */
 contract Mappings is OnlyOwner {
-    
+
     struct Details {
         bool _isERC20;
         address _contractAddress;
@@ -22,7 +22,7 @@ contract Mappings is OnlyOwner {
         return (swapDetails[symbol]._isERC20, swapDetails[symbol]._contractAddress, swapDetails[symbol]._migrationAddress);
     }
 
-    function setDetails(string memory symbol, bool isERC20, address contractAddress, address migrationAddress) public {
+    function setDetails(string memory symbol, bool isERC20, address contractAddress, address migrationAddress) public onlyOwner {
         swapDetails.push(Details(isERC20, contractAddress, migrationAddress));
     }
 
