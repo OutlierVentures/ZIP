@@ -16,4 +16,9 @@ contract Mappings is OnlyOwner {
     }
     mapping(string => Details) public swapDetails;
 
+    function getDetails(string memory symbol) public view returns (bool, address, address) {
+        require(swapDetails[symbol].contractAddress != address(0), "Token not currently supported.");
+        return (swapDetails[symbol].isERC20, swapDetails[symbol].contractAddress, swapDetails[symbol].migrationAddress);
+    }
+
 }
