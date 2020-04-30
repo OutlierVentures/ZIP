@@ -172,3 +172,9 @@ A further benefit of the CStack token is that it may be purchased both as normal
 
 1. [Reduced latency in cross-chain redemption](https://github.com/OutlierVentures/ZIP/issues/1).
 2. GSN tests (see [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/test/GSN)).
+
+## Note on comparing strings in Solidity
+
+```js
+keccak256(abi.encodePacked(tokenSymbol)) == keccak256("FET")
+```
