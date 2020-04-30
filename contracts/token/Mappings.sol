@@ -4,27 +4,16 @@ import "../utils/OnlyOwner.sol";
 
 /**
  * @dev Maps token symbols to contract and migartion addreses addresses.
+ * If no contract address, not supported.
+ * If no migration address, is a native swap.
+ * If both a contract address and a migration address, uses an external swap.
  */
 contract Mappings is OnlyOwner {
-    mapping(string => address) public contractAddresses;
-    mapping(string => address) public migrationAddresses;
-
-    function getContractAddress(string memory symbol) public view returns (address) {
-        require(contractAddresses[symbol] != address(0), "Token not currently supported.");
-        return contractAddresses[symbol];
+    struct Details {
+        bool isERC20;
+        address contractAddress;
+        address migrationAddress;
     }
-
-    function setContractAddress(string memory symbol, address contractAddress) public returns (address) {
-        contractAddresses[symbol] = contractAddress;
-    }
-
-    function getMigrationAddress(string memory symbol) public view returns (address) {
-        require(migrationAddresses[symbol] != address(0), "Token not currently supported for migration.");
-        return migrationAddresses[symbol];
-    }
-
-    function setMigrationAddress(string memory symbol, address migrationAddress) public returns (address) {
-        migrationAddresses[symbol] = migrationAddress;
-    }
+    mapping(string => Details) public swapDetails;
 
 }
