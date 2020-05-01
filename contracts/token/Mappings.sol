@@ -23,7 +23,9 @@ contract Mappings is OnlyOwner {
     }
 
     function setDetails(string memory symbol, bool isERC20, address contractAddress, address migrationAddress) public onlyOwner {
-        swapDetails.push(Details(isERC20, contractAddress, migrationAddress));
+        swapDetails[symbol]._isERC20 = isERC20;
+        swapDetails[symbol]._contractAddress = contractAddress;
+        swapDetails[symbol]._migrationAddress = migrationAddress;
     }
 
 }
