@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 /**
- * @dev Interface of the ERC20 standard plus ZIP's deposit and redeem.
+ * @dev Interface of the ERC20 standard.
  */
 interface Interface {
     /**
