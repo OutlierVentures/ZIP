@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 /**
  * @dev Interface of the ERC20 standard plus ZIP's deposit and redeem.
  */
-interface Interface {
+interface ZIPI {
     /**
      * @dev Returns the amount of tokens in existence.
      */
