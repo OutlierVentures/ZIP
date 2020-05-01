@@ -1,5 +1,6 @@
 pragma solidity ^0.5.0;
 
+import "./ZIPI.sol";
 import "./Interface.sol";
 import "./SpendExternal.sol";
 import "./Mappings.sol";
