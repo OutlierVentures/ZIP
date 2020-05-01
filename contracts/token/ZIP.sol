@@ -284,7 +284,7 @@ contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNReci
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
     function deposit(string memory tokenSymbol, uint256 amount) public returns (bool) {
-        address contractAddress = getContractAddress(tokenSymbol);
+        (,address contractAddress,) = getDetails(tokenSymbol);
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
             uint256 marketRate = convert(amount, contractAddress, address(this));
@@ -320,7 +320,7 @@ contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNReci
         }
         // Native, burn wrapped token and emit event now.
         else {
-            emit Redeem(_msgSender(), tokenSymbol, targetAddress, amountRedeemed);
+            emit Redemption(_msgSender(), tokenSymbol, targetAddress, amountRedeemed);
         }
         return true;
     }
