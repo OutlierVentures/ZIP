@@ -305,21 +305,22 @@ contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNReci
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
         require(contractBalance >= amount, "Insufficient balance");
         require(address(this).balance >= _minEthBalance, "ZIP contract has insufficient ETH");
-        uint256 amountRedeemed = convert(amount, contractAddress, address(this));
-        uint256 fee = amountRedeemed / 40;
+        uint256 amountConverted = convert(amount, contractAddress, address(this));
+        uint256 fee = amountConverted / 40;
+        uint256 amountRedeemed = amountConverted - fee;
         // Burn ZIP
         _burn(_msgSender(), amount);
         if (isERC20) {
-            increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
+            increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed);
         }
         // Non-native, use external swap
         else if (migrationAddress != address(0)) {
-            increaseExternalAllowance(contractAddress, migrationAddress, amountRedeemed - fee);
-            SwapInterface(migrationAddress).transferToNativeTargetAddress(amountRedeemed - fee, targetAddress);
+            increaseExternalAllowance(contractAddress, migrationAddress, amountRedeemed);
+            SwapInterface(migrationAddress).transferToNativeTargetAddress(amountRedeemed, targetAddress);
         }
         // Native, burn wrapped token and emit event now.
         else {
-            emit Redeem(_msgSender(), tokenSymbol, targetAddress, amountRedeemed - fee);
+            emit Redeem(_msgSender(), tokenSymbol, targetAddress, amountRedeemed);
         }
         return true;
     }
