@@ -31,7 +31,7 @@ import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol"
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNRecipient {
+contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
