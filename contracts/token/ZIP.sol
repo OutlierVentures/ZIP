@@ -320,9 +320,9 @@ contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNReci
             SwapInterface(migrationAddress).transferToNativeTargetAddress(amountRedeemed - fee, targetAddress);
         }
         // Native, burn wrapped token and emit event now.
-        //else {
+        else {
             // Todo
-        //}
+        }
         return true;
     }
 
@@ -354,5 +354,15 @@ contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNReci
      */
     function _postRelayedCall(bytes memory context, bool, uint256 actualCharge, bytes32) internal {
     }
+
+    /**
+     * @dev Emitted when ZIP is redeemed by `from` on chain `chain`, target address `to`.
+     * The `value` is the total to be redeemed in the redeemed token, i.e. post-conversion.
+     *
+     * A string is used for the target address `to` because it can be a non-Ethereum format address.
+     *
+     * Note that `value` may be zero.
+     */
+    event Redemption(address indexed from, string chain, string to, uint256 value);
 
 }
