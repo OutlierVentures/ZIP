@@ -64,7 +64,8 @@ contract GasFuture is ConvertLib, Mappings {
      */
     function start() public payable {
         if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
-            Interface(getContractAddress(baseTokenSymbol)).transferFrom(seller, zipAddress, numberOfTokens);
+            (,address contractAddress,) = getDetails(baseTokenSymbol);
+            Interface(contractAddress).transferFrom(seller, zipAddress, numberOfTokens);
             ZIP(zipAddress).deposit(baseTokenSymbol, numberOfTokens); // WARN account for ZIP fees
         } else {
             selfdestruct(buyer);
