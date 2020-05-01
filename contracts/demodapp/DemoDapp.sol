@@ -1,6 +1,6 @@
 pragma solidity ^0.5.0;
 
-import "../token/Interface.sol";
+import "../token/ZIPI.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
 contract DemoDapp is GSNRecipient {
@@ -9,7 +9,7 @@ contract DemoDapp is GSNRecipient {
      * @dev Example dapp function: spend a base token from the basket.
      */
     function spendBaseToken() external returns (bool) {
-        Interface zip = Interface(address(0)); // Replace 0 address with ZIP address
+        ZIPI zip = ZIPI(address(0)); // Replace 0 address with ZIP address
         zip.transfer(address(this), 100); // Send 100 ZIP to dapp
         // Send 100 ZIP worth of FET to this dapp's Etch contract
         zip.redeem("FET", 100, "0xTHISDAPPCONTRACTFETCHADDRESS");
