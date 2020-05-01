@@ -309,8 +309,6 @@ contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNReci
         uint256 fee = amountRedeemed / 40;
         // Burn ZIP
         _burn(_msgSender(), amount);
-        // Can't compare string memory and string literal, so compare hashes
-        
         if (isERC20) {
             increaseExternalAllowance(contractAddress, _msgSender(), amountRedeemed - fee);
         }
@@ -321,7 +319,7 @@ contract ZIP is Context, Interface, SpendExternal, ConvertLib, Mappings, GSNReci
         }
         // Native, burn wrapped token and emit event now.
         else {
-            // Todo
+            emit Redeem(_msgSender(), tokenSymbol, targetAddress, amountRedeemed - fee);
         }
         return true;
     }
