@@ -35,10 +35,10 @@ truffle migrate
 
 ## Using Z!P
 
-If you've got Zip in your wallet, just bring up the Zip interface and call redeem with your chosen chain and your dapp's address on that chain. For example, to use 100 units on Fetch.AI:
+If you've got Zip in your wallet, just bring up the Zip interface `ZIPI` and call `redee`m with your chosen chain and your dapp's address on that chain. For example, to use 100 units on Fetch.AI:
 
 ```js
-Interface zip = Interface("0xZIPCONTRACTADDRESS");
+ZIPI zip = ZIPI("0xZIPCONTRACTADDRESS");
 zip.redeem("FET", 100, "0xYOURCONTRACTFETCHADDRESS");
 ```
 
