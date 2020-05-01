@@ -73,7 +73,7 @@ interface Interface {
      *
      * Returns a boolean value indicating whether the operation succeeded.
      */
-    function redeem(string calldata tokenSymbol, uint256 amount, string memory targetAddress) external returns (bool);
+    function redeem(string calldata tokenSymbol, uint256 amount, string calldata targetAddress) external returns (bool);
 
     /**
      * @dev Emitted when `value` tokens are moved from one account (`from`) to
