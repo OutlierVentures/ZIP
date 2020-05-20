@@ -287,7 +287,7 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
      */
     function deposit(string memory tokenSymbol, uint256 amount) public returns (bool) {
         (,address contractAddress,) = getDetails(tokenSymbol);
-        Interface(contractAddress).approve(address(this), amount)
+        Interface(contractAddress).approve(address(this), amount);
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
         if (success) {
             uint256 marketRate = convert(amount, contractAddress, address(this));
