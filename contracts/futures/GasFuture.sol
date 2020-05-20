@@ -65,12 +65,9 @@ contract GasFuture is ConvertLib, Mappings {
     function start() public payable {
         if (!(block.timestamp >= start_date + 1 days) && escrow_balance >= price) {
             (,address contractAddress,) = getDetails(baseTokenSymbol);
-            /**
-            /* FIXME Ideally we'd like a relayed call here so the caller of start() transfers their funds directly to 
-            /* the ZIP contract, rather than having to tranfer them into this future, which then transfers them to ZIP.
-             */
-            Interface(contractAddress).approve(address(this), numberOfTokens);
-            Interface(contractAddress).transferFrom(seller, address(this), numberOfTokens);
+            // Old way
+            //Interface(contractAddress).approve(address(this), numberOfTokens);
+            //Interface(contractAddress).transferFrom(seller, address(this), numberOfTokens);
             ZIP(zipAddress).deposit(baseTokenSymbol, numberOfTokens); // WARN account for ZIP fees
         } else {
             selfdestruct(buyer);
