@@ -2,6 +2,7 @@ pragma solidity ^0.5.0;
 
 import "./ZIPI.sol";
 import "./Interface.sol";
+import "./BurnableInterface.sol";
 import "./SpendExternal.sol";
 import "./Mappings.sol";
 import "./SwapInterface.sol";
@@ -322,6 +323,7 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
         }
         // Native, burn wrapped token and emit event now.
         else {
+            BurnableInterface(contractAddress).burn(amount);
             emit Redemption(_msgSender(), tokenSymbol, targetAddress, amountRedeemed);
         }
         return true;
