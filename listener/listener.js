@@ -12,7 +12,7 @@ async function getContractAbi() {
     return CONTRACT_ABI;
 }
 
-async function eventQuery(){
+async function lockQuery(){
     const CONTRACT_ABI = getContractAbi();
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
     contract.events.Lock()
@@ -22,4 +22,4 @@ async function eventQuery(){
     .on('error', console.error);
 }
 
-eventQuery();
+lockQuery();
