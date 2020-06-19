@@ -15,6 +15,11 @@ async function getContractAbi() {
 async function eventQuery(){
     const CONTRACT_ABI = getContractAbi();
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+    contract.events.Lock()
+    .on('data', (event) => {
+        console.log(event);
+    })
+    .on('error', console.error);
 }
 
 eventQuery();
