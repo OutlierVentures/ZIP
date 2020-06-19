@@ -21,4 +21,15 @@ async function lockQuery(){
     .on('error', console.error);
 }
 
+async function redemptionQuery(){
+    const CONTRACT_ABI = getContractAbi();
+    const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+    contract.events.Redemption()
+    .on('data', (event) => {
+        console.log(event);
+    })
+    .on('error', console.error);
+}
+
 lockQuery();
+redemptionQuery();
