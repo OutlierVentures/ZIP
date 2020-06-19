@@ -1,9 +1,8 @@
 const Web3 = require('web3'); 
 const client = require('node-rest-client-promise').Client();
-const INFURA_KEY = "SECRET_INFURA_KEY"; // Insert your own key here :)
-const ETHERSCAN_API_KEY = "SECRET_ETHERSCAN_KEY";
-const web3 = new Web3('wss://mainnet.infura.io/ws/v3/'  +  INFURA_KEY);
-const CONTRACT_ADDRESS = "0xADDRESSHERE";
+const INFURA_KEY = "REPLACE_THIS";
+const web3 = new Web3('wss://mainnet.infura.io/ws/v3/' + INFURA_KEY);
+const CONTRACT_ADDRESS = "0xADDRESS_HERE";
 const etherescan_url = `http://api.etherscan.io/api?module=contract&action=getabi&address=${CONTRACT_ADDRESS}&apikey=${ETHERSCAN_API_KEY}`
 
 async function getContractAbi() {
