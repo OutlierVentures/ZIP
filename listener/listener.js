@@ -52,5 +52,14 @@ async function parseEvent(event) {
     return storeData;
 }
 
+async function getNBlocks(n) {
+    var blocks = [];
+    for (var i = 0; i < n; i++) {
+        var block = web3.eth.getBlock(web3.eth.blockNumber - i);
+        blocks.push({"number": block.number, "hash": block.hash});
+    }
+    return blocks;
+}
+
 lockQuery();
 redemptionQuery();
