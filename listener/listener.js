@@ -39,7 +39,16 @@ async function redemptionQuery(){
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
     contract.events.Redemption()
     .on('data', (event) => {
-        console.log(event);
+        // Get idenitfying fields
+        blockData = {
+            "transactionHash": event.transactionHash,
+            "blockNumber": event.blockNumber.num,
+            "address": event.address
+        }
+        // Add the data fields
+        storeData = Object.assign(blockData, event.returnValues);
+        // Add to DB
+        lockEvents.push(storeData);
     })
     .on('error', console.error);
 }
