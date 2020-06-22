@@ -40,7 +40,7 @@ async function redemptionQuery(){
 }
 
 async function parseEvent(event) {
-    // Get idenitfying fields
+    // Get identifying fields
     blockData = {
         "transactionHash": event.transactionHash,
         "blockHash": event.blockHash, // Use this when waiting for block confirmations
@@ -56,10 +56,23 @@ async function getNBlocks(n) {
     var blocks = [];
     for (var i = 0; i < n; i++) {
         var block = web3.eth.getBlock(web3.eth.blockNumber - i);
-        blocks.push({"number": block.number, "hash": block.hash});
+        blocks.push({ block.hash: block.number });
     }
     return blocks;
 }
 
-lockQuery();
-redemptionQuery();
+// Process transactions which have at least 10 block confirmations
+async function processTx(eventList) {
+    past20blocks = getNBlocks(20);
+    for (var i; i < eventList.length; i++) {
+        thisEvent = eventList[i];
+        if (thisEvent.blockHash in past20blocks) {
+            latestBlock = Math.max.apply(Math, past20blocks.map(function(obj) { return Object.values(obj)[0]; }))
+            // Check for at least 10 block confirmations
+            if (thisEvent.blockNumber < latestBlock - 9) {
+                console.log("Submit this transaction on the second chain.");
+            }
+        }
+    }
+}
+
