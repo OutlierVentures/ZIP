@@ -8,20 +8,16 @@ const etherescan_url = `http://api.etherscan.io/api?module=contract&action=getab
 class Listener {
 
     constructor() {
+        const etherescan_response = await client.getPromise(etherescan_url)
+        const CONTRACT_ABI = JSON.parse(etherescan_response.data.result);
+        const CONTRACT_ABI = await getContractAbi();
+        this.contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
         // Will move to Redis or Mongo in near future
         this.lockEvents = [];
         this.redemptionEvents = [];
     }
 
-    async getContractAbi() {
-        const etherescan_response = await client.getPromise(etherescan_url)
-        const CONTRACT_ABI = JSON.parse(etherescan_response.data.result);
-        return CONTRACT_ABI;
-    }
-
-    async lockQuery(){
-        const CONTRACT_ABI = await getContractAbi();
-        const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+    async lockQuery(contract){
         contract.events.Lock()
         .on('data', (event) => {
             storeData = await parseEvent(event);
@@ -31,9 +27,7 @@ class Listener {
         .on('error', console.error);
     }
 
-    async redemptionQuery(){
-        const CONTRACT_ABI = await getContractAbi();
-        const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+    async redemptionQuery(contract){
         contract.events.Redemption()
         .on('data', (event) => {
             storeData = await parseEvent(event);
@@ -81,8 +75,8 @@ class Listener {
     }
 
     async run() {
-        await this.lockQuery();
-        await this.redemptionQuery();
+        await this.lockQuery(this.contract);
+        await this.redemptionQuery(this.contract);
         await this.processTx(this.lockEvents);
         await this.processTx(this.redemptionEvents);
     }
