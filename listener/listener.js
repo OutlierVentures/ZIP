@@ -76,3 +76,10 @@ async function processTx(eventList) {
     }
 }
 
+async function run() {
+    lockQuery();
+    redemptionQuery();
+    processTx(lockEvents);
+    processTx(redemptionEvents);
+}
+
