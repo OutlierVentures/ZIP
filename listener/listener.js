@@ -54,7 +54,8 @@ class Listener {
         var blocks = [];
         for (var i = 0; i < n; i++) {
             var block = web3.eth.getBlock(web3.eth.blockNumber - i);
-            blocks.push({ block.hash: block.number });
+            hash = block.hash;
+            blocks.push({ hash: block.number });
         }
         return blocks;
     }
