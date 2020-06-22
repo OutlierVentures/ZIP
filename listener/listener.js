@@ -43,6 +43,7 @@ async function parseEvent(event) {
     // Get idenitfying fields
     blockData = {
         "transactionHash": event.transactionHash,
+        "blockHash": event.blockHash, // Use this when waiting for block confirmations
         "blockNumber": event.blockNumber.num,
         "address": event.address
     }
