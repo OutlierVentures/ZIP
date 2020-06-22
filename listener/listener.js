@@ -20,14 +20,7 @@ async function lockQuery(){
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
     contract.events.Lock()
     .on('data', (event) => {
-        // Get idenitfying fields
-        blockData = {
-            "transactionHash": event.transactionHash,
-            "blockNumber": event.blockNumber.num,
-            "address": event.address
-        }
-        // Add the data fields
-        storeData = Object.assign(blockData, event.returnValues);
+        storeData = parseEvent(event);
         // Add to DB
         lockEvents.push(storeData);
     })
@@ -39,18 +32,23 @@ async function redemptionQuery(){
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
     contract.events.Redemption()
     .on('data', (event) => {
-        // Get idenitfying fields
-        blockData = {
-            "transactionHash": event.transactionHash,
-            "blockNumber": event.blockNumber.num,
-            "address": event.address
-        }
-        // Add the data fields
-        storeData = Object.assign(blockData, event.returnValues);
+        storeData = parseEvent(event);
         // Add to DB
-        lockEvents.push(storeData);
+        redemptionEvents.push(storeData);
     })
     .on('error', console.error);
+}
+
+async function parseEvent(event) {
+    // Get idenitfying fields
+    blockData = {
+        "transactionHash": event.transactionHash,
+        "blockNumber": event.blockNumber.num,
+        "address": event.address
+    }
+    // Add the data fields
+    storeData = Object.assign(blockData, event.returnValues);
+    return storeData;
 }
 
 lockQuery();
