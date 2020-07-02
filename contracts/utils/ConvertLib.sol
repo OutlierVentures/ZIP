@@ -1,6 +1,6 @@
 // Converts tokens 1:1 and cents to tokens 1:1. For true oracle implementation see ConvertLibChainlink.sol.
 
-pragma solidity ^0.5.0;
+pragma solidity ^0.6.0;
 
 contract ConvertLib {
 

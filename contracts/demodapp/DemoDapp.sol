@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.6.0;
 
 import "../token/ZIPI.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";

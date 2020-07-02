@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.6.0;
 
 /**
  * @dev Interface of the ERC20 standard, plus burn(). Unfortunatley we can't do interface inheritance in Solidity yet.

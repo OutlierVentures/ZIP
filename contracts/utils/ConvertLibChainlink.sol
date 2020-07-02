@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.6.0;
 
 // Chainlink requires solidity 0.4. This is a working solution if willing to drop to older Solidity.
 /*
