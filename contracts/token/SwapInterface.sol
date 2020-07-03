@@ -1,7 +1,7 @@
 pragma solidity ^0.6.0;
 
-contract SwapInterface {
+abstract contract SwapInterface {
 
-    function transferToNativeTargetAddress(uint256 amount, string calldata nativeAddress) external;
+    function transferToNativeTargetAddress(uint256 amount, string calldata nativeAddress) external virtual;
     
 }

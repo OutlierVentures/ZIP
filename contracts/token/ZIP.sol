@@ -8,7 +8,7 @@ import "./Mappings.sol";
 import "./SwapInterface.sol";
 import "../utils/SafeMath.sol";
 import "../utils/ConvertLib.sol";
-import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
+import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipientSignature.sol";
 
 /**
  * @dev Implementation of the token interface. This is the OpenZeppelin ERC20
@@ -33,7 +33,7 @@ import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol"
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {Interface-approve}.
  */
-contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient {
+contract ZIP is ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipientSignatureUpgradeSafe {
     using SafeMath for uint256;
 
     mapping (address => uint256) private _balances;
@@ -90,14 +90,14 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
     /**
      * @dev See {Interface-totalSupply}.
      */
-    function totalSupply() public view returns (uint256) {
+    function totalSupply() public view override returns (uint256) {
         return _totalSupply;
     }
 
     /**
      * @dev See {Interface-balanceOf}.
      */
-    function balanceOf(address account) public view returns (uint256) {
+    function balanceOf(address account) public view override returns (uint256) {
         return _balances[account];
     }
 
@@ -109,7 +109,7 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
      * - `recipient` cannot be the zero address.
      * - the caller must have a balance of at least `amount`.
      */
-    function transfer(address recipient, uint256 amount) public returns (bool) {
+    function transfer(address recipient, uint256 amount) public override returns (bool) {
         _transfer(_msgSender(), recipient, amount);
         return true;
     }
@@ -117,7 +117,7 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
     /**
      * @dev See {Interface-allowance}.
      */
-    function allowance(address owner, address spender) public view returns (uint256) {
+    function allowance(address owner, address spender) public view override returns (uint256) {
         return _allowances[owner][spender];
     }
 
@@ -128,7 +128,7 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
      *
      * - `spender` cannot be the zero address.
      */
-    function approve(address spender, uint256 amount) public returns (bool) {
+    function approve(address spender, uint256 amount) public override returns (bool) {
         _approve(_msgSender(), spender, amount);
         return true;
     }
@@ -145,7 +145,7 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
      * - the caller must have allowance for `sender`'s tokens of at least
      * `amount`.
      */
-    function transferFrom(address sender, address recipient, uint256 amount) public returns (bool) {
+    function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {
         _transfer(sender, recipient, amount);
         _approve(sender, _msgSender(), _allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance"));
         return true;
@@ -285,7 +285,7 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
      * The tokens are minted at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function deposit(string memory tokenSymbol, uint256 amount) public returns (bool) {
+    function deposit(string memory tokenSymbol, uint256 amount) public override returns (bool) {
         (,address contractAddress,) = getDetails(tokenSymbol);
         Interface(contractAddress).approve(address(this), amount);
         bool success = Interface(contractAddress).transferFrom(_msgSender(), address(this), amount);
@@ -302,7 +302,7 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
      * ZIP is burned at the sender's address. Oracle data is
      * handled in the ConvertLib contract. Note that the caller covers gas.
      */
-    function redeem(string memory tokenSymbol, uint256 amount, string memory targetAddress) public returns (bool) {
+    function redeem(string memory tokenSymbol, uint256 amount, string memory targetAddress) public override returns (bool) {
         // GetDetails will throw error if token not supported
         (bool isERC20, address contractAddress, address migrationAddress) = getDetails(tokenSymbol);
         uint256 contractBalance = Interface(contractAddress).balanceOf(address(this));
@@ -332,31 +332,48 @@ contract ZIP is Context, ZIPI, SpendExternal, ConvertLib, Mappings, GSNRecipient
     /**
      * @dev GSN: accept relayed call.
      */
-    function acceptRelayedCall(
+    function acceptRelayedCall (
         address relay,
         address from,
-        bytes calldata encodedFunction,
+        bytes memory encodedFunction,
         uint256 transactionFee,
         uint256 gasPrice,
         uint256 gasLimit,
         uint256 nonce,
-        bytes calldata approvalData,
+        bytes memory approvalData,
         uint256 maxPossibleCharge
-    ) external view returns (uint256, bytes memory) {
+    ) public view override returns (uint256, bytes memory) {
         return _approveRelayedCall();
     }
 
     /**
      * @dev GSN: preprocessing for relayed calls.
      */
-    function _preRelayedCall(bytes memory context) internal returns (bytes32) {
+    function _preRelayedCall(bytes memory context) internal override returns (bytes32) {
     }
 
     /**
      * @dev GSN: postprocessing for relayed calls.
      */
-    function _postRelayedCall(bytes memory context, bool, uint256 actualCharge, bytes32) internal {
+    function _postRelayedCall(bytes memory context, bool, uint256 actualCharge, bytes32) internal override {
     }
+
+    /**
+     * @dev GSN: Solidity mandates overriding this because it's defined in two or more base classes. TODO: check and find a way to remove it.
+     *
+     */
+    function _msgSender() internal view virtual override (GSNRecipientUpgradeSafe, ContextUpgradeSafe) returns (address payable) {
+        return GSNRecipientUpgradeSafe._msgSender();
+    }
+
+    /**
+     * @dev GSN: Solidity mandates overriding this because it's defined in two or more base classes. TODO: check and find a way to remove it.
+     *
+     */
+    function _msgData() internal view virtual override (GSNRecipientUpgradeSafe, ContextUpgradeSafe) returns (bytes memory) {
+        return GSNRecipientUpgradeSafe._msgData();
+    }
+
 
     /**
      * @dev Emitted when ZIP is redeemed by `from` on chain `chain`, target address `to`.
