@@ -4,7 +4,7 @@ import "./Interface.sol";
 import "../utils/SafeMath.sol";
 import "@openzeppelin/contracts-ethereum-package/contracts/GSN/GSNRecipient.sol";
 
-contract SpendExternal is Context {
+contract SpendExternal is ContextUpgradeSafe {
     using SafeMath for uint256;
 
     function increaseExternalAllowance(address contractAddress, address spender, uint256 addedValue) internal {
